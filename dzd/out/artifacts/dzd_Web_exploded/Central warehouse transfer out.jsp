@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>打印分发单</title>
+    <title>中心库房调拨出库</title>
     <meta name="description" content="这是一个 index 页面">
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,8 +22,7 @@
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
-    <link rel="stylesheet" href="assets/css/print.css"/>
-    <script src="assets/js/print.js"></script>
+
 </head>
 
 <body data-type="widgets">
@@ -49,7 +48,7 @@
                 <ul>
                     <!-- 欢迎语 -->
                     <li class="am-text-sm tpl-header-navbar-welcome">
-                        <a href="javascript:;">欢迎使用 </a>
+                        <a href="javascript:;">欢迎使用</a>
                     </li>
                     <!-- 退出 -->
                     <li class="am-text-sm">
@@ -88,13 +87,13 @@
                 </a>
                 <ul class="sidebar-nav sidebar-nav-sub" style="display:block">
                     <li class="sidebar-nav-link">
-                        <a href="Central warehouse purchases.jsp" >
+                        <a href="Central warehouse purchases.jsp">
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房购货入库
                         </a>
                     </li>
 
                     <li class="sidebar-nav-link">
-                        <a href="Central%20warehouse%20transfer%20out.jsp" >
+                        <a href="Central%20warehouse%20transfer%20out.jsp"  class="sub-active">
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房调拨出库
                         </a>
                     </li>
@@ -104,7 +103,7 @@
                         </a>
                     </li>
                     <li class="sidebar-nav-link">
-                        <a href="Print%20out%20distribution.jsp" class="sub-active">
+                        <a href="Print%20out%20distribution.jsp" >
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房打印分发单
                         </a>
                     </li>
@@ -142,128 +141,104 @@
                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                     <div class="widget am-cf">
                         <div class="widget-head am-cf">
-                            <div class="widget-title  am-cf"><h1>中心库房打印分发单</h1></div>
+                            <div class="widget-title  am-cf"><h1>中心库房调拨出库</h1></div>
                         </div>
 
                         <!--查询表单-->
                         <div class="widget-body  am-fr">
-                            <form class="am-form-inline" role="form">
-
-
-                                <div class="am-u-lg-8 am-u-lg-centered">
-                                    <div class="am-form-group tpl-table-list-select">
-                                        <select data-am-selected="{btnSize: 'sm'}" style="display: none;">
-                                            <option value="option1">库房名称</option>
-                                            <option value="option2">库房1</option>
-                                            <option value="option3">库房2</option>
-                                            <option value="option3">库房3</option>
-                                        </select>
-                                    </div>
-                                    <div class="am-form-group">
+                            <form class="am-form am-form-horizontal">
+                                <div class="am-form-group">
+                                    <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field " placeholder="请选择出库日期" data-am-datepicker="" >
-                                        </div>
-                                    </div>
-
-                                    <div class="am-form-group">
-                                        <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field "  placeholder="请输入商品名查询分发单 ">
+                                            <input type="text" class="am-form-field tpl-form-no-bg" placeholder="请选择日期查询调拨单" data-am-datepicker="" readonly="">
                                             <span class="am-input-group-btn">
-                                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
-                                             </span>
+                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                            </span>
                                         </div>
                                     </div>
+
                                 </div>
                             </form>
+
 
                             <div class="am-u-sm-12">
                                 <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
                                     <thead>
                                     <tr>
-                                        <th>库房名称</th>
-                                        <th>商品名称</th>
-                                        <th>数量</th>
-                                        <th>日期</th>
-                                        <th>操作</th>
+                                        <th>商品信息</th>
+                                        <th>分站名称</th>
+                                        <th>出库数量</th>
+                                        <th>时间</th>
+                                        <th>选择操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr class="gradeX">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
+                                        <td>超级超级超级大的西瓜</td>
+                                        <td>分站1</td>
+                                        <td>123</td>
                                         <td>2016-09-26</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
+                                                    <input type="checkbox">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr class="even gradeC">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
+                                        <td>苹果梨</td>
+                                        <td>分站1</td>
+                                        <td>323</td>
                                         <td>2016-09-26</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
+                                                <input type="checkbox">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr class="gradeX">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
+                                        <td>超级超级超级大的西瓜</td>
+                                        <td>分站1</td>
+                                        <td>111</td>
+
                                         <td>2016-09-26</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
+                                                <input type="checkbox">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr class="even gradeC">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
+                                        <td>超级超级超级大的葡萄</td>
+                                        <td>分站1</td>
+                                        <td>434</td>
+
                                         <td>2016-09-26</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
+                                                <input type="checkbox">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr class="even gradeC">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
+                                        <td>超级超级超级大的哈密瓜</td>
+                                        <td>分站1</td>
+                                        <td>454354</td>
                                         <td>2016-09-26</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
+                                                <input type="checkbox">
                                             </div>
                                         </td>
                                     </tr>
 
                                     <tr class="even gradeC">
-                                        <td>库房1</td>
-                                        <td>苹果   </td>
-                                        <td>100</td>
+                                        <td>超级超级超级大的水果蔬菜</td>
+                                        <td>分站1</td>
+                                        <td>34534   </td>
                                         <td>2016-09-26</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
+                                                <input type="checkbox">
                                             </div>
                                         </td>
                                     </tr>
@@ -273,6 +248,12 @@
                             </div>
 
                             <div class="am-u-lg-12 am-cf">
+
+                                    <div class="am-u-sm-2">
+                                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success" id="doc-confirm-toggle">
+                                            调拨出库
+                                        </button>
+                                    </div>
 
                                 <div class="am-fr">
                                     <ul class="am-pagination tpl-pagination">
@@ -286,6 +267,7 @@
                                     </ul>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -293,80 +275,80 @@
         </div>
     </div>
 </div>
+<button
+        type="button"
+        class="am-btn am-btn-warning"
+        >
+    Confirm
+</button>
 
-<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-modal">
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd">分发单
-            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-        </div>
+        <div class="am-modal-hd"><h3>调拨出库</h3></div>
         <div class="am-modal-bd">
-            <div class="container">
-                <!--startprint-->
-                <div class="receipt">
-                    <div style="text-align: center">
-                        <h2>出库单</h2>
-                        <table align="center" width="60%">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td>分发单号:</td>
-                                <td>1234567890</td>
-                            </tr>
-                            <tr>
-                                <td>商品编号:</td>
-                                <td>1234567890</td>
-                            </tr>
-                            <tr>
-                                <td>商品名称:</td>
-                                <td>电脑</td>
-                            </tr>
-                            <tr>
-                                <td>商品价格:</td>
-                                <td>5000</td>
-                            </tr>
-                            <tr>
-                                <td>商品数量:</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>总金额:</td>
-                                <td>5000</td>
-                            </tr>
-                            <tr>
-                                <td>库房编号:</td>
-                                <td>12341242</td>
-                            </tr>
-                                <td>厂商:</td>
-                                <td>富士康</td>
-                            </tr>
-                            </tr>
-                                <td>分发员:</td>
-                                <td>分发1</td>
-                            </tr>
-                            </tr>
-                                <td>签收人:</td>
-                                <td>刘莫某</td>
-                            </tr>
+                <p>你选择的调拨信息如下，是否要调拨出库?</p>
+            <table class="am-table">
+                <thead>
+                <tr>
+                    <th>分站库房</th>
+                    <th>商品名称</th>
+                    <th>出库数量</th>
+                </tr>
+                </thead>
+                <tbody align="left">
+                <tr>
+                    <td>库房1</td>
+                    <td>苹果</td>
+                    <td>12</td>
+                </tr>
+                <tr>
+                    <td>库房1</td>
+                    <td>书本</td>
+                    <td>22</td>
+                </tr>
+                <tr>
+                    <td>库房1</td>
+                    <td>足球</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>库房1</td>
+                    <td>手机</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>库房1</td>
+                    <td>电脑</td>
+                    <td>2</td>
+                </tr>
+                </tbody>
+            </table>
 
-                            <tr>
-                                <td>日期:</td>
-                                <td>2018-01-01</td>
-                            </tr>
-                        </table>
-
-                    </div>
-                </div>
-                <!--endprint-->
-                <a href="javascript:void(0)" onclick="doPrint()">
-                    <i class="am-icon-print"></i> 打印
-                </a>
-            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>出库</span>
         </div>
     </div>
 </div>
-
+<script>
+    $(function() {
+        $('#doc-modal-list').find('.am-icon-close').add('#doc-confirm-toggle').
+        on('click', function() {
+            $('#my-confirm').modal({
+                relatedTarget: this,
+                onConfirm: function(options) {
+                    var msg = '出库成功';
+                    alert(msg);
+                },
+                // closeOnConfirm: false,
+                onCancel: function() {
+                    alert('调拨失败');
+                }
+            });
+        });
+    });
+</script>
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/amazeui.datatables.min.js"></script>
 <script src="assets/js/dataTables.responsive.min.js"></script>
