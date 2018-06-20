@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
-
+    <script type="text/javascript" src="assets/js/search.js"></script>
 </head>
 
 <body data-type="widgets">
@@ -150,53 +150,53 @@
                                     <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                                             <input type="text" class="am-form-field " id="search" placeholder="请输入购货单号查询购货单">
+                                            <span id="warn"></span>
                                             <span class="am-input-group-btn">
-                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" onclick="doSearchByPsId()"></button>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </form>
 
-                            <form class="am-form tpl-form-line-form">
-
+                            <form class="am-form tpl-form-line-form" action="cenWarehouseServlet?action=submitPs" method="post">
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品名称</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" value="电脑" readonly="readonly">
+                                        <input name="productname" id="productname" type="text"  readonly="readonly">
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品数量</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" value="100" readonly="readonly">
+                                        <input name="productnum" id="productnum" type="text" readonly="readonly">
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">实际数量</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" value="100">
+                                        <input name="acnum" id="acnum" type="text" >
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label  class="am-u-sm-3 am-form-label">入库日期</label>
                                     <div class="am-u-sm-9">
-                                        <input required="required" type="text" class="am-form-field tpl-form-no-bg" placeholder="请选择入库日期" data-am-datepicker="" readonly="">
+                                        <input name="indate" id="indate" required="required" type="text" class="am-form-field tpl-form-no-bg" placeholder="请选择入库日期" data-am-datepicker="" readonly="">
                                     </div>
                                 </div>
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">备注</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" placeholder="若商品数量与实际不一致，填写此信息">
+                                        <input name="note" id="note"  type="text" placeholder="若商品数量与实际不一致，填写此信息">
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success " data-am-modal="{target: '#my-alert'}">入库</button>
+                                        <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">入库</button>
                                     </div>
                                 </div>
                             </form>
