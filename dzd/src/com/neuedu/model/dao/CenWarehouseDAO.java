@@ -5,11 +5,13 @@
 */
 package com.neuedu.model.dao;
 
+import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.PurchaseSupplier;
 
 import net.sf.json.JSONObject;
 
 public interface CenWarehouseDAO {
     public JSONObject getPurchaseInfo(int psid);
+    public void insertInWarehouseInfo(CenWarehouseInInfo cwin);
 }
 

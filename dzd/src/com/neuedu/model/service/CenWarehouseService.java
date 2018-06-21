@@ -7,6 +7,7 @@ package com.neuedu.model.service;
 
 import com.neuedu.model.dao.CenWarehouseDAO;
 import com.neuedu.model.dao.CenWarehouseDAOImp;
+import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.PurchaseSupplier;
 import com.neuedu.utils.DBUtil;
 
@@ -34,6 +35,13 @@ public class CenWarehouseService {
 			e.printStackTrace();
 		}
 		return ps;
+	}
+	
+	public void insertInWarehouseInfo(CenWarehouseInInfo cwin) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+		cwd.insertInWarehouseInfo(cwin);
+		conn.close();
 	}
 
 }
