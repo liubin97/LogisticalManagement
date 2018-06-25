@@ -12,6 +12,7 @@ import com.neuedu.model.dao.CenWarehouseDAO;
 import com.neuedu.model.dao.CenWarehouseDAOImp;
 import com.neuedu.model.dao.SubWarehouseDAO;
 import com.neuedu.model.dao.SubWarehouseDAOImp;
+import com.neuedu.model.po.RecvGoodsInfo;
 import com.neuedu.model.po.SubWarehouseInInfo;
 import com.neuedu.utils.DBUtil;
 
@@ -24,14 +25,14 @@ public class SubWarehouseService {
 	public static SubWarehouseService getInstance() {
 		return service;
 	}
-	
+	//获取入库任务单 
 	public JSONObject getTaskListIn(int task_id) {
 		Connection conn = DBUtil.getConn();
 		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
 		JSONObject json = swd.getTaskListIn(task_id);
 		return json;
 	}
-	
+	//插入入库信息
 	public void insertInInfo(SubWarehouseInInfo swin) throws SQLException {
 		
 		Connection conn = DBUtil.getConn();
@@ -47,6 +48,29 @@ public class SubWarehouseService {
 			DBUtil.closeConn(conn);
 		}
 		
+	}
+	//获取出库任务单
+	public JSONObject getTaskListOut(int task_id) {
+		Connection conn = DBUtil.getConn();
+		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
+		JSONObject json = swd.getTaskListOut(task_id);
+		return json;
+	}
+	
+	//插入领货信息
+	public void insertRecvGoodsInfo(RecvGoodsInfo rin) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		//开启事务
+		DBUtil.beginTransaction(conn);
+		try {
+			SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
+			swd.insertRecvGoodsInfo(rin);
+			DBUtil.commit(conn);
+		}catch (Exception e) {
+			DBUtil.rollback(conn);
+		} finally {
+			DBUtil.closeConn(conn);
+		}
 	}
 	
 }

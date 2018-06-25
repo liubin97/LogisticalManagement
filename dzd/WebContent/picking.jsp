@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="cn">
 
 <head>
@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
-
+    <script type="text/javascript" src="assets/js/search.js"></script>
 </head>
 
 <body data-type="widgets">
@@ -140,9 +140,9 @@
                                 <div class="am-form-group">
                                     <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field tpl-form-no-bg" placeholder="请输入任务单号查询任务单" >
+                                            <input type="text" class="am-form-field tpl-form-no-bg" name="search" id="search" placeholder="请输入任务单号查询" required>
                                             <span class="am-input-group-btn">
-                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" onclick="doSearchOutByTaskId()"></button>
                                             </span>
                                         </div>
                                     </div>
@@ -150,45 +150,45 @@
                                 </div>
                             </form>
 
-                            <form class="am-form tpl-form-line-form">
-
+                            <form class="am-form tpl-form-line-form" action="subWarehouseServlet?action=submitTaskOut" method="post" data-am-validator>
+                                <input type="hidden" id="taskid" name="taskid">
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品名称</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" value="电脑" readonly="readonly">
+                                        <input type="text" id="productname" name="productname"  readonly="readonly" required>
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品数量</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" value="100" readonly="readonly">
+                                        <input type="text" id="productnum" name="productnum" readonly="readonly" required>
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
-                                    <label class="am-u-sm-3 am-form-label">实际数量</label>
+                                    <label  class="am-u-sm-3 am-form-label">领货日期</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" value="100">
-                                    </div>
-                                </div>
-
-                                <div class="am-form-group">
-                                    <label  class="am-u-sm-3 am-form-label">入库日期</label>
-                                    <div class="am-u-sm-9">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" placeholder="请选择入库日期" data-am-datepicker="" readonly="">
+                                        <input type="text" id="outdate" name="outdate" class="am-form-field tpl-form-no-bg" placeholder="请选择领货日期" required data-am-datepicker readonly >
                                     </div>
                                 </div>
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">领货人</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" placeholder="请输入领货人姓名">
+                                        <input type="text" id="recvname" name="recvname" placeholder="请输入领货人姓名" required>
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label class="am-u-sm-3 am-form-label">备注</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" id="note" name="note" placeholder="若商品数量与实际不一致，填写此信息">
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success " data-am-modal="{target: '#my-alert'}">领货</button>
+                                        <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success " >领货</button>
                                     </div>
                                 </div>
                             </form>

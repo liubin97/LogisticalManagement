@@ -13,6 +13,7 @@ public class RecvGoodsInfo {
 	private String recv_person;
 	private Date recv_date;
 	private Date operate_date;
+	private String note;
 	public int getRecv_goods_info_id() {
 		return recv_goods_info_id;
 	}
@@ -43,5 +44,12 @@ public class RecvGoodsInfo {
 	public void setOperate_date(Date operate_date) {
 		this.operate_date = operate_date;
 	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
+	
 	
 }

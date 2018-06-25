@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.neuedu.model.po.Product;
+import com.neuedu.model.po.RecvGoodsInfo;
 import com.neuedu.model.po.SubWarehouseInInfo;
 import com.neuedu.utils.DBUtil;
 
@@ -33,6 +34,31 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 		JSONObject json = new JSONObject();
 		try {
 			ps = conn.prepareStatement(" select * from task_order_view where task_list_id =? and task_status=2  ");
+			ps.setInt(1, task_id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				json.put("task_list_id", task_id);
+				json.put("product_name", getProductById(rs.getInt("prod_id")).getProduct_name());
+				json.put("product_num", rs.getInt("amount"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
+		return json;
+	}
+	
+	/* 
+	 * 获取分站出库任务单
+	 */
+	public JSONObject getTaskListOut(int task_id) {
+		PreparedStatement ps = null;
+		JSONObject json = new JSONObject();
+		try {
+			ps = conn.prepareStatement(" select * from task_order_view where task_list_id =? and task_status=4  ");
 			ps.setInt(1, task_id);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -74,7 +100,6 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	 * 修改任务单状态
 	 */
 	public void editTaskListStatus(int tasklist_id, int status) {
-		// TODO Auto-generated method stub
 		PreparedStatement ps = null;
 		try {
 			ps = conn.prepareStatement(" update task_list set task_status =? where task_list_id =? ");
@@ -107,4 +132,33 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 			DBUtil.closePS(ps);
 		}
 	}
+
+	/* 
+	 * 插入领货信息
+	 */
+	public void insertRecvGoodsInfo(RecvGoodsInfo rin) {
+		// TODO Auto-generated method stub
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(" insert into recv_goods_info (task_list_id,recv_person,recv_date,operate_date,note) 	"
+					+ " values(?,?,?,?,?) ");
+			ps.setInt(1, rin.getTask_list_id());
+			ps.setString(2, rin.getRecv_person());
+			ps.setDate(3, new Date(rin.getRecv_date().getTime()));
+			ps.setDate(4, new Date(rin.getOperate_date().getTime()));
+			ps.setString(5, rin.getNote());
+			ps.executeUpdate();
+			editTaskListStatus(rin.getTask_list_id(), 5);//更改任务单状态到分站库房出库
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.neuedu.model.dao.SubWarehouseDAO#getTaskListOut(int)
+	 */
+	
 }
