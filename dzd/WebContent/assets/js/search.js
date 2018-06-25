@@ -60,7 +60,7 @@ function doSearchByPsId() {
                 $("#productname").val(dataJson.productname);
                 $("#productnum").val(dataJson.productnum);
                 $("#acnum").val(dataJson.productnum);
-                $("#psid").val(searchval);
+                $("#psid").val(dataJson.ps_id);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("error");
@@ -70,5 +70,28 @@ function doSearchByPsId() {
         alert("购货单号不能为空");
     }
 }
-
+function doSearchInByTaskId() {
+    if ($("#search").val() != "") {
+        var searchval = $("#search").val();
+        $.ajax({
+            url: "subWarehouseServlet?action=searchTaskIn",
+            data: "taskid=" + $("#search").val(),
+            datatype: "text",
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            success: function (data) {//这里的data是由请求页面返回的数据
+                var dataJson = JSON.parse(data); // 使用parse方法将data转换成json格式
+                $("#productname").val(dataJson.product_name);
+                $("#productnum").val(dataJson.product_num);
+              //  $("#acnum").val(dataJson.product_num);
+                $("#taskid").val(dataJson.task_list_id);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("error");
+            }
+        });
+    } else {
+        alert("购货单号不能为空");
+    }
+}
 

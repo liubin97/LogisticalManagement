@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class SubWarehouseInInfo {
 	private int sub_warehouse_in_info;
-	private int distribution_list_id;
+	private int task_list_id;
 	private String note;
 	private Date operate_date;
 	public int getSub_warehouse_in_info() {
@@ -18,11 +18,11 @@ public class SubWarehouseInInfo {
 	public void setSub_warehouse_in_info(int sub_warehouse_in_info) {
 		this.sub_warehouse_in_info = sub_warehouse_in_info;
 	}
-	public int getDistribution_list_id() {
-		return distribution_list_id;
+	public int getTask_list_id() {
+		return task_list_id;
 	}
-	public void setDistribution_list_id(int distribution_list_id) {
-		this.distribution_list_id = distribution_list_id;
+	public void setTask_list_id(int task_list_id) {
+		this.task_list_id = task_list_id;
 	}
 	public String getNote() {
 		return note;

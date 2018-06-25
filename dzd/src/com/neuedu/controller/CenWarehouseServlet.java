@@ -84,9 +84,9 @@ public class CenWarehouseServlet extends HttpServlet {
 
 	private void doGetPurchaseInfo(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String psid = request.getParameter("psid");
-		JSONObject ps = null;
+		JSONObject json = null;
 		try {
-			ps = CenWarehouseService.getInstance().getPurchaseInfo(Integer.parseInt(psid));
+			json = CenWarehouseService.getInstance().getPurchaseInfo(Integer.parseInt(psid));
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,7 +96,7 @@ public class CenWarehouseServlet extends HttpServlet {
 		}
         response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();	
-		pw.print(ps);
+		pw.print(json);
 		pw.close();
     }
 	
