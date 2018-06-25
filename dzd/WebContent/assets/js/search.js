@@ -69,6 +69,6 @@ function doSearchByPsId() {
     } else {
         alert("购货单号不能为空");
     }
-
-
 }
+
+

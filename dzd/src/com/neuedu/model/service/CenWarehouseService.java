@@ -11,9 +11,11 @@ import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.PurchaseSupplier;
 import com.neuedu.utils.DBUtil;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 
 public class CenWarehouseService {
@@ -24,24 +26,66 @@ public class CenWarehouseService {
 		return service;
 	}
 
-	public JSONObject getPurchaseInfo(int psid){
+	public JSONObject getPurchaseInfo(int psid) throws SQLException{
 		Connection conn = DBUtil.getConn();
 		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
 		JSONObject ps = cwd.getPurchaseInfo(psid);
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		DBUtil.closeConn(conn);;
+		
 		return ps;
 	}
 	
 	public void insertInWarehouseInfo(CenWarehouseInInfo cwin) throws SQLException {
 		Connection conn = DBUtil.getConn();
+		//开启事务
+		DBUtil.beginTransaction(conn);
+		try {
+			CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+			cwd.insertInWarehouseInfo(cwin);
+			DBUtil.commit(conn);
+		}catch (Exception e) {
+			DBUtil.rollback(conn);
+		} finally {
+			DBUtil.closeConn(conn);
+		}
+	}
+	
+	public void editOrderStatus(int order_id ,int status) throws SQLException {
+		Connection conn = DBUtil.getConn();
 		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
-		cwd.insertInWarehouseInfo(cwin);
+		cwd.editOrderStatus(order_id,status);
 		conn.close();
+	}
+	
+	public JSONArray getTaskListByDate(Date date,int pageNum) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+		JSONArray json = cwd.getTaskListByDate(date,pageNum);
+		DBUtil.closeConn(conn);
+		return json;
+	}
+	
+	public int getTaskListPageCount(Date date) {
+		Connection conn = DBUtil.getConn();
+		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+		int count = cwd.getTaskListPageCount(date);
+		return count;
+	}
+	
+	public void insertOutWarehouseInfo(int []ids) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		//开启事务
+		DBUtil.beginTransaction(conn);
+		try {
+			CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+			cwd.insertOutWarehouseInfo(ids);
+			DBUtil.commit(conn);
+		}catch (Exception e) {
+			DBUtil.rollback(conn);
+		} finally {
+			DBUtil.closeConn(conn);
+		}
 	}
 
 }

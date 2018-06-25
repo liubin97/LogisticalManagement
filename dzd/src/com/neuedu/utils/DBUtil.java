@@ -56,6 +56,8 @@ public class DBUtil {
 	}
 	//关闭连接
 	public static void closeConn(Connection conn) throws SQLException{
+		
+		System.out.println("Close database connect!");
 		conn.close();
 	}
 	//关闭PS

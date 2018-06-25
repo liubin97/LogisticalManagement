@@ -160,7 +160,7 @@
                                 </div>
                             </form>
 
-                            <form class="am-form tpl-form-line-form" action="cenWarehouseServlet?action=submitPs" method="post">
+                            <form class="am-form tpl-form-line-form" action="cenWarehouseServlet?action=submitPs" method="post"data-am-validator>
                                 <input type="hidden" id="psid" name="psid">
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品名称</label>
@@ -186,7 +186,7 @@
                                 <div class="am-form-group">
                                     <label  class="am-u-sm-3 am-form-label">入库日期</label>
                                     <div class="am-u-sm-9">
-                                        <input name="indate" id="indate" required="required" type="text" class="am-form-field tpl-form-no-bg" placeholder="请选择入库日期" data-am-datepicker="" >
+                                        <input name="indate" id="indate"  type="text" class="am-form-field tpl-form-no-bg" placeholder="请选择入库日期" data-am-datepicker readonly required >
                                     </div>
                                 </div>
                                 <div class="am-form-group">

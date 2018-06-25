@@ -4,6 +4,8 @@ import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.PurchaseSupplier;
 import com.neuedu.model.service.CenWarehouseService;
 
+
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
@@ -50,9 +52,7 @@ public class CenWarehouseServlet extends HttpServlet {
 		//查找购货单
 		if("searchPs".equals(action)){
             doGetPurchaseInfo(request,response);
-        }
-		//提交购货入库单
-		else if("submitPs".equals(action)) {
+        } else if("submitPs".equals(action)) {//提交购货入库单
 			try {
 				doPurchaseInInfo(request, response);
 			} catch (ParseException e) {
@@ -62,12 +62,38 @@ public class CenWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if("searchTaskDate".equals(action)) {//根据日期查询任务单
+			try {
+				doGetTaskListByDate(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if("submitWhIN".equals(action)) {
+			try {
+				doWarehouseOutInfo(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
 	private void doGetPurchaseInfo(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String psid = request.getParameter("psid");
-		JSONObject ps = CenWarehouseService.getInstance().getPurchaseInfo(Integer.parseInt(psid));
+		JSONObject ps = null;
+		try {
+			ps = CenWarehouseService.getInstance().getPurchaseInfo(Integer.parseInt(psid));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();	
 		pw.print(ps);
@@ -87,7 +113,44 @@ public class CenWarehouseServlet extends HttpServlet {
 		cwininfo.setNote(note);
 		cwininfo.setOperate_date(new Date());
 		CenWarehouseService.getInstance().insertInWarehouseInfo(cwininfo);
+		
 		request.getRequestDispatcher("Central warehouse purchases.jsp").forward(request, response);
 	}
+	
+	private void doGetTaskListByDate(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException, ServletException {
 
+		String date = null;
+		//System.out.println(date+"1");
+		String pagenum = request.getParameter("pageNum");
+		int pageNum = 1;
+		if(pagenum!=null && !"".equals(pagenum)){
+			//点击页码查询		
+			date = (String) request.getSession().getAttribute("date");
+			pageNum = Integer.parseInt(pagenum);
+		}else{
+			//点击页面按钮查询
+			date = request.getParameter("search");
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		int pageCount = CenWarehouseService.getInstance().getTaskListPageCount(new java.sql.Date(sdf.parse(date).getTime()));
+		JSONArray json = CenWarehouseService.getInstance().getTaskListByDate(new java.sql.Date(sdf.parse(date).getTime()),pageNum);
+		request.setAttribute("resultList", json);
+		request.getSession().setAttribute("date", date);
+		request.getSession().setAttribute("pageNum", pageNum);
+		request.getSession().setAttribute("pagecount", pageCount);
+		request.getRequestDispatcher("Central warehouse transfer out.jsp").forward(request, response);
+	}
+
+	private void doWarehouseOutInfo(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+		String[] ids = request.getParameterValues("chk");
+		int[] idss = new int[ids.length];
+		for(int i  = 0;i<ids.length;i++){
+			idss[i] = Integer.parseInt(ids[i]);
+			//System.out.println(idss[i]);
+		}
+		CenWarehouseService.getInstance().insertOutWarehouseInfo(idss);
+		int pageNum = (Integer)request.getSession().getAttribute("pageNum");
+		
+		response.sendRedirect(request.getContextPath()+"/cenWarehouseServlet?action=searchTaskDate&pageNum="+pageNum);
+	}
 }
