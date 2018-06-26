@@ -7,6 +7,7 @@ package com.neuedu.model.service;
 
 import com.neuedu.model.dao.CenWarehouseDAO;
 import com.neuedu.model.dao.CenWarehouseDAOImp;
+import com.neuedu.model.po.CenReturnInInfo;
 import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.PurchaseSupplier;
 import com.neuedu.utils.DBUtil;
@@ -25,7 +26,7 @@ public class CenWarehouseService {
 	public static CenWarehouseService getInstance() {
 		return service;
 	}
-	
+	//查询购货单
 	public JSONObject getPurchaseInfo(int psid) throws SQLException{
 		Connection conn = DBUtil.getConn();
 		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
@@ -35,7 +36,7 @@ public class CenWarehouseService {
 		
 		return ps;
 	}
-	
+	//插入购货入库信息
 	public void insertInWarehouseInfo(CenWarehouseInInfo cwin) throws SQLException {
 		Connection conn = DBUtil.getConn();
 		//开启事务
@@ -50,14 +51,7 @@ public class CenWarehouseService {
 			DBUtil.closeConn(conn);
 		}
 	}
-	
-	public void editOrderStatus(int order_id ,int status) throws SQLException {
-		Connection conn = DBUtil.getConn();
-		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
-		cwd.editOrderStatus(order_id,status);
-		conn.close();
-	}
-	
+	//获取出库信息
 	public JSONArray getTaskListByDate(Date date,int pageNum) throws SQLException {
 		Connection conn = DBUtil.getConn();
 		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
@@ -65,14 +59,14 @@ public class CenWarehouseService {
 		DBUtil.closeConn(conn);
 		return json;
 	}
-	
+	//获取出库信息页数
 	public int getTaskListPageCount(Date date) {
 		Connection conn = DBUtil.getConn();
 		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
 		int count = cwd.getTaskListPageCount(date);
 		return count;
 	}
-	
+	//插入出库信息
 	public void insertOutWarehouseInfo(int []ids) throws SQLException {
 		Connection conn = DBUtil.getConn();
 		//开启事务
@@ -80,6 +74,31 @@ public class CenWarehouseService {
 		try {
 			CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
 			cwd.insertOutWarehouseInfo(ids);
+			DBUtil.commit(conn);
+		}catch (Exception e) {
+			DBUtil.rollback(conn);
+		} finally {
+			DBUtil.closeConn(conn);
+		}
+	}
+	//查询退货入库信息
+	public JSONObject getReturnInInfo(int task_id) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+		JSONObject json = cwd.getReturnInInfo(task_id);
+		
+		DBUtil.closeConn(conn);;
+		
+		return json;
+	}
+	//插入退货入库信息
+	public void insertReturnInInfo(CenReturnInInfo crin) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		//开启事务
+		DBUtil.beginTransaction(conn);
+		try {
+			CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+			cwd.insertReturnInInfo(crin);
 			DBUtil.commit(conn);
 		}catch (Exception e) {
 			DBUtil.rollback(conn);

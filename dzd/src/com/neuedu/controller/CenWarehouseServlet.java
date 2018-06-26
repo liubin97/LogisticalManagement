@@ -1,5 +1,6 @@
 package com.neuedu.controller;
 
+import com.neuedu.model.po.CenReturnInInfo;
 import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.PurchaseSupplier;
 import com.neuedu.model.service.CenWarehouseService;
@@ -45,7 +46,7 @@ public class CenWarehouseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("锟斤拷锟斤拷CenWarehouseServlet");
+		System.out.println("Enter into CenWarehouseServlet");
 		//设定编码格式
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
@@ -80,7 +81,22 @@ public class CenWarehouseServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else if("searchReturnIn".equals(action)) {//查询退货入库信息
-			doGetReturnInInfo(request, response);
+			try {
+				doGetReturnInInfo(request, response);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if("submitReturnIn".equals(action)) {
+			try {
+				doReturnIn(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	//查询购货单
@@ -120,17 +136,16 @@ public class CenWarehouseServlet extends HttpServlet {
 	}
 	//查询要调拨任务信息
 	private void doGetTaskListByDate(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException, ServletException {
-
 		String date = null;
 		//System.out.println(date+"1");
 		String pagenum = request.getParameter("pageNum");
 		int pageNum = 1;
 		if(pagenum!=null && !"".equals(pagenum)){
-			//锟斤拷锟揭筹拷锟斤拷询		
+			//点击页码查询	
 			date = (String) request.getSession().getAttribute("date");
 			pageNum = Integer.parseInt(pagenum);
 		}else{
-			//锟斤拷锟揭筹拷姘磁ワ拷锟窖�
+			//点击页面查询
 			date = request.getParameter("search");
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -155,14 +170,23 @@ public class CenWarehouseServlet extends HttpServlet {
 		response.sendRedirect(request.getContextPath()+"/cenWarehouseServlet?action=searchTaskDate&pageNum="+pageNum);
 	}
 	//查询退货入库信息
-	private void doGetReturnInInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void doGetReturnInInfo(HttpServletRequest request, HttpServletResponse response) throws IOException, NumberFormatException, SQLException {
 		String task_id = request.getParameter("taskid");
-		JSONObject json = null;
-		
+		JSONObject json = CenWarehouseService.getInstance().getReturnInInfo(Integer.parseInt(task_id));
         response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();	
 		pw.print(json);
 		pw.close();
 	}
-	
+	//插入退货入库信息
+	private void doReturnIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		String task_id = request.getParameter("taskid");
+		String actual_num = request.getParameter("acnum");
+		CenReturnInInfo crin = new CenReturnInInfo();
+		crin.setTask_list_id(Integer.parseInt(task_id));
+		crin.setReturn_date(new Date());
+		crin.setActual_num(Integer.parseInt(actual_num));
+		CenWarehouseService.getInstance().insertReturnInInfo(crin);
+		request.getRequestDispatcher("Central return in.jsp").forward(request, response);
+	}
 }

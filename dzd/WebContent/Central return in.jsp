@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="cn">
 
 <head>
@@ -157,7 +157,7 @@
                             </form>
 
 
-                            <form class="am-form tpl-form-line-form" action="cenWarehouseServlet?action=submitReturnIn" data-am-validator>
+                            <form class="am-form tpl-form-line-form" action="cenWarehouseServlet?action=submitReturnIn" method="post" data-am-validator>
                                 <input type="hidden" id="taskid" name="taskid">
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品名称</label>

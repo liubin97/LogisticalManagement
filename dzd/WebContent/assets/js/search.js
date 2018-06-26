@@ -115,10 +115,10 @@ function doSearchReturnInById() {
             contentType: "application/x-www-form-urlencoded",
             success: function (data) {//这里的data是由请求页面返回的数据
                 var dataJson = JSON.parse(data); // 使用parse方法将data转换成json格式
-                $("#productname").val(dataJson.product_name);
-                $("#productnum").val(dataJson.product_num);
-                $("#acnum").val(dataJson.product_num);
-                $("#taskid").val(dataJson.task_list_id);
+                $("#productname").val(dataJson.productname);
+                $("#productnum").val(dataJson.productnum);
+                $("#acnum").val(dataJson.productnum);
+                $("#taskid").val(dataJson.taskid);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("error");
