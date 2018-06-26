@@ -1,7 +1,7 @@
 /**
  * @package com.neuedu.model.po
  * @author liubin
- * @date 2018��6��20��
+ * @date 2018锟斤拷6锟斤拷20锟斤拷
 */
 package com.neuedu.model.po;
 

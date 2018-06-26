@@ -1,7 +1,7 @@
 /**
  * @package com.neuedu.model.dao
  * @author liubin
- * @date 2018Äê6ÔÂ20ÈÕ
+ * @date 2018å¹´6æœˆ20æ—¥
 */
 package com.neuedu.model.dao;
 
@@ -32,7 +32,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * ²éÑ¯¹º»õµ¥
+	 * æŸ¥è¯¢è´­è´§å•
 	 */
 	public JSONObject getPurchaseInfo(int psid) {
 		JSONObject json = new JSONObject();
@@ -57,7 +57,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		return json;	
 	}
 	
-	//¸ù¾İ¹º»õµ¥ºÅ²éÑ¯order_id
+	//æ ¹æ®è´­è´§å•å·æŸ¥è¯¢order_id
 	public int getOrderIdByPsId(int psid) {
 		// TODO Auto-generated method stub
 		PreparedStatement ps = null;
@@ -79,8 +79,8 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * ²åÈë¹º»õÈë¿âµ¥
-	 * ²¢¸ù¾İ¹º»õµ¥ÖĞÊÇ·ñÓĞ¶©µ¥IdĞŞ¸Ä¿â´æºÍ¶©µ¥×´Ì¬
+	 * æ’å…¥è´­è´§å…¥åº“å•
+	 * å¹¶æ ¹æ®è´­è´§å•ä¸­æ˜¯å¦æœ‰è®¢å•Idä¿®æ”¹åº“å­˜å’Œè®¢å•çŠ¶æ€
 	 */
 	public void insertInWarehouseInfo(CenWarehouseInInfo cwin) {
 		// TODO Auto-generated method stub
@@ -110,7 +110,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * ĞŞ¸Ä¶©µ¥×´Ì¬
+	 * ä¿®æ”¹è®¢å•çŠ¶æ€
 	 */
 	public void editOrderStatus(int order_id,int status) {
 		// TODO Auto-generated method stub
@@ -129,7 +129,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * ĞŞ¸ÄÈÎÎñµ¥×´Ì¬
+	 * ä¿®æ”¹ä»»åŠ¡å•çŠ¶æ€
 	 */
 	public void editTaskListStatus(int tasklist_id, int status) {
 		// TODO Auto-generated method stub
@@ -146,7 +146,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 	
 	/* 
-	 * ĞŞ¸Ä¿â´æÁ¿
+	 * ä¿®æ”¹åº“å­˜é‡
 	 */
 	public void editStoragNum(int num,int flag) {
 		// TODO Auto-generated method stub
@@ -175,7 +175,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * Í¨¹ıÈÕÆÚ²éÑ¯Òª³ö¿âÈÎÎñµ¥ĞÅÏ¢
+	 * é€šè¿‡æ—¥æœŸæŸ¥è¯¢è¦å‡ºåº“ä»»åŠ¡å•ä¿¡æ¯
 	 */
 	public JSONArray getTaskListByDate(Date date, int pageNum) {
 		PreparedStatement ps = null;
@@ -206,7 +206,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * »ñÈ¡ÉÌÆ·ĞÅÏ¢
+	 * è·å–å•†å“ä¿¡æ¯
 	 */
 	public Product getProductById(int product_id) {
 		PreparedStatement ps = null;
@@ -226,7 +226,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * ²éÑ¯·ÖÕ¾Ãû³Æ
+	 * æŸ¥è¯¢åˆ†ç«™åç§°
 	 */
 	public String getWarehouseNameById(int id) {
 		// TODO Auto-generated method stub
@@ -247,7 +247,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * »ñÈ¡Ò³ÂëÊı
+	 * è·å–é¡µç æ•°
 	 */
 	public int getTaskListPageCount(Date date) {
 		// TODO Auto-generated method stub
@@ -269,7 +269,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * ²åÈë³ö¿âĞÅÏ¢
+	 * æ’å…¥å‡ºåº“ä¿¡æ¯
 	 */
 	public void insertOutWarehouseInfo(int[] ids) {
 		// TODO Auto-generated method stub
@@ -282,7 +282,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 				ps.setDate(2, date);
 				ps.executeUpdate();
 				ps.close();
-				editTaskListStatus(ids[i],2);//ĞŞ¸ÄÈÎÎñµ¥×´Ì¬µ½ÖĞĞÄ¿â·¿³ö¿â;
+				editTaskListStatus(ids[i],2);//ä¿®æ”¹ä»»åŠ¡å•çŠ¶æ€åˆ°ä¸­å¿ƒåº“æˆ¿å‡ºåº“;
 			}
 			
 		} catch (SQLException e) {

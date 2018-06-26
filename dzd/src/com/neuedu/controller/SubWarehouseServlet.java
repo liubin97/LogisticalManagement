@@ -47,14 +47,14 @@ public class SubWarehouseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("����SubWarehouseServlet");
-		//�趨�����ʽ
+		System.out.println("进入SubWarehouseServlet");
+		//设定编码格式
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
-		//��������
+		//查找任务单
 		if("searchTaskIn".equals(action)){
 			doGetTaskIn(request, response);
-		} else if("submitTaskIn".equals(action)) {//�ύ������ⵥ
+		} else if("submitTaskIn".equals(action)) {//提交调拨入库单
 			try {
 				doTransferIn(request,response);
 			} catch (ParseException e) {
@@ -64,9 +64,9 @@ public class SubWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchTaskOut".equals(action)) {//��ѯ�����
+		} else if("searchTaskOut".equals(action)) {//查询领货单
 			doGetTaskOut(request, response);
-		} else if("submitTaskOut".equals(action)) {//�ύ������Ϣ
+		} else if("submitTaskOut".equals(action)) {//提交出库信息
 			try {
 				doRecvGoods(request, response);
 			} catch (SQLException e) {
@@ -76,16 +76,16 @@ public class SubWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchReturnRegister".equals(action)) {//��ѯ�˻��Ǽ���Ϣ
+		} else if("searchReturnRegister".equals(action)) {//查询退货登记信息
 			doGetReturnRegisterInfo(request, response);
-		} else if("submitReturnRegister".equals(action)) {//�����˻��Ǽ���Ϣ
+		} else if("submitReturnRegister".equals(action)) {//插入退货登记信息
 			try {
 				doRetrunRegister(request, response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchSubReturnOut".equals(action)) {//��ѯ�˻�������Ϣ
+		} else if("searchSubReturnOut".equals(action)) {//查询退货出库信息
 			try {
 				doGetReturnOut(request, response);
 			} catch (ParseException e) {
@@ -101,7 +101,7 @@ public class SubWarehouseServlet extends HttpServlet {
 			}
 		}
 	}
-	//��ѯ�������
+	//查询入库任务单
 	private void doGetTaskIn(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String task_id = request.getParameter("taskid");
 		JSONObject json = null;
@@ -111,7 +111,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		pw.print(json);
 		pw.close();
 	}
-	//������������Ϣ
+	//插入调拨入库信息
 	private void doTransferIn(HttpServletRequest request, HttpServletResponse response) throws ParseException, SQLException, ServletException, IOException {
 		String task_id = request.getParameter("taskid");
 		String indate = request.getParameter("indate");
@@ -124,7 +124,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		SubWarehouseService.getInstance().insertInInfo(swin);
 		request.getRequestDispatcher("Substation warehouse transfer  in.jsp").forward(request, response);
 	}
-	//��ѯ��������
+	//查询出库任务单
 	private void doGetTaskOut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String task_id = request.getParameter("taskid");
 		JSONObject json = null;
@@ -134,7 +134,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		pw.print(json);
 		pw.close();
 	}
-	//���������Ϣ
+	//插入领货信息
 	private void doRecvGoods(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, ParseException {
 		String task_id = request.getParameter("taskid");
 		String outdate = request.getParameter("outdate");
@@ -150,7 +150,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		SubWarehouseService.getInstance().insertRecvGoodsInfo(rin);
 		request.getRequestDispatcher("picking.jsp").forward(request, response);
 	}
-	//��ѯ�˻��Ǽ�����
+	//查询退货登记任务单
 	private void doGetReturnRegisterInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String task_id = request.getParameter("taskid");
 		JSONObject json = SubWarehouseService.getInstance().getReturnInTaskList(Integer.parseInt(task_id));
@@ -159,7 +159,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		pw.print(json);
 		pw.close();
 	}
-	//�����˻��Ǽ���Ϣ
+	//插入退货登记信息
 	private void doRetrunRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		String task_id = request.getParameter("taskid");
 		String actual_num = request.getParameter("acnum");
@@ -170,20 +170,20 @@ public class SubWarehouseServlet extends HttpServlet {
 		SubWarehouseService.getInstance().insertReturnRegisterInfo(rin);
 		request.getRequestDispatcher("Return register.jsp").forward(request, response);
 	}
-	//��ѯ�˻���������
+	//查询退货出库任务单
 	private void doGetReturnOut(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException, IOException {
 		String start_date = null;
 		String end_date = null;
 		String pagenum = request.getParameter("pageNum");
 		int pageNum = 1;
 		if(pagenum!=null && !"".equals(pagenum)){
-			//���ҳ���ѯ
+			//点击页码查询
 			System.out.println(pagenum);
 			start_date = (String) request.getSession().getAttribute("starttime");
 			end_date = (String) request.getSession().getAttribute("endtime");
 			pageNum = Integer.parseInt(pagenum);
 		}else{
-			//���ҳ�水ť��ѯ
+			//点击页面按钮查询
 			start_date = request.getParameter("starttime");
 			end_date = request.getParameter("endtime");
 		}
@@ -200,7 +200,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		request.getSession().setAttribute("pagecount", pageCount);
 		request.getRequestDispatcher("Substation return out.jsp").forward(request, response);
 	}
-	//�����˻�������Ϣ
+	//插入退货出库信息
 	private void doReturnOut(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
 		String[] ids = request.getParameterValues("chk");
 		int[] idss = new int[ids.length];

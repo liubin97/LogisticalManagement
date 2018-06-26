@@ -1,7 +1,7 @@
 /**
  * @package com.neuedu.utils
  * @author liubin
- * @date 2018Äê6ÔÂ19ÈÕ
+ * @date 2018å¹´6æœˆ19æ—¥
 */
 package com.neuedu.utils;
 import java.sql.Connection;
@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DBUtil {
-	//»ñÈ¡Êı¾İ¿âÁ¬½Ó
+	//è·å–æ•°æ®åº“è¿æ¥
 	public static Connection getConn(){
 		Connection conn = null;
 		try {
@@ -27,7 +27,7 @@ public class DBUtil {
 		}
 		return conn;
 	}
-	//¿ªÆôÊÂÎñ
+	//å¼€å¯äº‹åŠ¡
 	public static void beginTransaction(Connection conn){
 		try {
 			conn.setAutoCommit(false);
@@ -36,7 +36,7 @@ public class DBUtil {
 			e.printStackTrace();
 		}
 	}
-	//Ìá½»ÊÂÎñ
+	//æäº¤äº‹åŠ¡
 	public static void commit(Connection conn){
 		try {
 			conn.commit();
@@ -45,7 +45,7 @@ public class DBUtil {
 			e.printStackTrace();
 		}
 	}
-	//»Ø¹ö
+	//å›æ»š
 	public static void rollback(Connection conn){
 		try {
 			conn.rollback();
@@ -54,13 +54,13 @@ public class DBUtil {
 			e.printStackTrace();
 		}
 	}
-	//¹Ø±ÕÁ¬½Ó
+	//å…³é—­è¿æ¥
 	public static void closeConn(Connection conn) throws SQLException{
 		
 		System.out.println("Close database connect!");
 		conn.close();
 	}
-	//¹Ø±ÕPS
+	//å…³é—­PS
 	public static void closePS(PreparedStatement ps){
 		try {
 			ps.close();

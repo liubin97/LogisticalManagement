@@ -1,7 +1,7 @@
 /**
  * @package com.neuedu.model.dao
  * @author liubin
- * @date 2018Äê6ÔÂ20ÈÕ
+ * @date 2018å¹´6æœˆ20æ—¥
 */
 package com.neuedu.model.dao;
 
@@ -31,7 +31,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 
 	/* 
-	 * »ñÈ¡·ÖÕ¾Èë¿âÈÎÎñµ¥
+	 * è·å–åˆ†ç«™å…¥åº“ä»»åŠ¡å•
 	 */
 	public JSONObject getTaskListIn(int task_id) {
 		// TODO Auto-generated method stub
@@ -57,7 +57,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 	
 	/* 
-	 * »ñÈ¡·ÖÕ¾³ö¿âÈÎÎñµ¥
+	 * è·å–åˆ†ç«™å‡ºåº“ä»»åŠ¡å•
 	 */
 	public JSONObject getTaskListOut(int task_id) {
 		PreparedStatement ps = null;
@@ -82,7 +82,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 
 	/* 
-	 * »ñÈ¡ÉÌÆ·ĞÅÏ¢
+	 * è·å–å•†å“ä¿¡æ¯
 	 */
 	public Product getProductById(int product_id) {
 		PreparedStatement ps = null;
@@ -102,7 +102,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 	
 	/* 
-	 * ĞŞ¸ÄÈÎÎñµ¥×´Ì¬
+	 * ä¿®æ”¹ä»»åŠ¡å•çŠ¶æ€
 	 */
 	public void editTaskListStatus(int tasklist_id, int status) {
 		PreparedStatement ps = null;
@@ -118,7 +118,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 
 	/* 
-	 * ²åÈëµ÷²¦Èë¿âĞÅÏ¢
+	 * æ’å…¥è°ƒæ‹¨å…¥åº“ä¿¡æ¯
 	 */
 	public void insertInInfo(SubWarehouseInInfo swin) {
 		// TODO Auto-generated method stub
@@ -129,7 +129,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 			ps.setString(2, swin.getNote());
 			ps.setDate(3, new Date(swin.getOperate_date().getTime()));
 			ps.executeUpdate();
-			editTaskListStatus(swin.getTask_list_id(), 3);//¸ü¸ÄÈÎÎñµ¥×´Ì¬µ½·ÖÕ¾¿â·¿Èë¿â
+			editTaskListStatus(swin.getTask_list_id(), 3);//æ›´æ”¹ä»»åŠ¡å•çŠ¶æ€åˆ°åˆ†ç«™åº“æˆ¿å…¥åº“
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -139,7 +139,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 
 	/* 
-	 * ²åÈëÁì»õĞÅÏ¢
+	 * æ’å…¥é¢†è´§ä¿¡æ¯
 	 */
 	public void insertRecvGoodsInfo(RecvGoodsInfo rin) {
 		// TODO Auto-generated method stub
@@ -153,7 +153,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 			ps.setDate(4, new Date(rin.getOperate_date().getTime()));
 			ps.setString(5, rin.getNote());
 			ps.executeUpdate();
-			editTaskListStatus(rin.getTask_list_id(), 5);//¸ü¸ÄÈÎÎñµ¥×´Ì¬µ½·ÖÕ¾¿â·¿³ö¿â
+			editTaskListStatus(rin.getTask_list_id(), 5);//æ›´æ”¹ä»»åŠ¡å•çŠ¶æ€åˆ°åˆ†ç«™åº“æˆ¿å‡ºåº“
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,7 +163,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 
 	/* 
-	 * »ñÈ¡ÍË»õÈë¿â ÈÎÎñµ¥
+	 * è·å–é€€è´§å…¥åº“ ä»»åŠ¡å•
 	 */
 	public JSONObject getReturnInTaskList(int task_id) {
 		PreparedStatement ps = null;
@@ -187,7 +187,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 
 	/* 
-	 * ²åÈëÍË»õµÇ¼ÇĞÅÏ¢
+	 * æ’å…¥é€€è´§ç™»è®°ä¿¡æ¯
 	 */
 	public void insertReturnRegisterInfo(ReturnRegisterInfo rin) {
 		PreparedStatement ps = null;
@@ -198,7 +198,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 			ps.setInt(2, rin.getActual_num());
 			ps.setDate(3, new Date(rin.getOperate_date().getTime()));
 			ps.executeUpdate();
-			editTaskListStatus(rin.getTask_id(), 9);//¸ü¸ÄÈÎÎñµ¥×´Ì¬µ½·ÖÕ¾¿â·¿ÍË»õÈë¿â
+			editTaskListStatus(rin.getTask_id(), 9);//æ›´æ”¹ä»»åŠ¡å•çŠ¶æ€åˆ°åˆ†ç«™åº“æˆ¿é€€è´§å…¥åº“
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -209,7 +209,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 	
 	/*
-	 * ²éÑ¯ÍË»õ³ö¿âÒ³Êı
+	 * æŸ¥è¯¢é€€è´§å‡ºåº“é¡µæ•°
 	 */
 	public int getReturnOutPage(Date start_date,Date end_date) {
 		PreparedStatement ps = null;
@@ -231,7 +231,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 	
 	/*
-	 * ²éÑ¯ÍË»õ³ö¿âĞÅÏ¢
+	 * æŸ¥è¯¢é€€è´§å‡ºåº“ä¿¡æ¯
 	 */
 	public JSONArray getReturnOutTaskList(Date start_date,Date end_date,int pageNum) {
 		PreparedStatement ps = null;
@@ -264,7 +264,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 	}
 
 	/* 
-	 * ²åÈëÍË»õ³ö¿âĞÅÏ¢
+	 * æ’å…¥é€€è´§å‡ºåº“ä¿¡æ¯
 	 */
 	public void insertReturnOutInfo(int[] ids) {
 		PreparedStatement ps = null;
@@ -276,7 +276,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 				ps.setDate(2, date);
 				ps.executeUpdate();
 				ps.close();
-				editTaskListStatus(ids[i],10);//ĞŞ¸ÄÈÎÎñµ¥×´Ì¬µ½·ÖÕ¾¿â·¿³ö¿â
+				editTaskListStatus(ids[i],10);//ä¿®æ”¹ä»»åŠ¡å•çŠ¶æ€åˆ°åˆ†ç«™åº“æˆ¿å‡ºåº“
 			}
 			
 		} catch (SQLException e) {

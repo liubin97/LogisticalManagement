@@ -45,14 +45,14 @@ public class CenWarehouseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("����CenWarehouseServlet");
-		//�趨�����ʽ
+		System.out.println("锟斤拷锟斤拷CenWarehouseServlet");
+		//设定编码格式
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
-		//���ҹ�����
+		//查询购货单
 		if("searchPs".equals(action)){
             doGetPurchaseInfo(request,response);
-        } else if("submitPs".equals(action)) {//�ύ������ⵥ
+        } else if("submitPs".equals(action)) {//插入购货入库信息
 			try {
 				doPurchaseInInfo(request, response);
 			} catch (ParseException e) {
@@ -62,7 +62,7 @@ public class CenWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchTaskDate".equals(action)) {//�������ڲ�ѯ����
+		} else if("searchTaskDate".equals(action)) {//查询出库单
 			try {
 				doGetTaskListByDate(request, response);
 			} catch (SQLException e) {
@@ -72,18 +72,18 @@ public class CenWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("submitWhIN".equals(action)) {
+		} else if("submitWhOut".equals(action)) {//提交出库信息
 			try {
 				doWarehouseOutInfo(request, response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchReturnIn".equals(action)) {
+		} else if("searchReturnIn".equals(action)) {//查询退货入库信息
 			doGetReturnInInfo(request, response);
 		}
 	}
-	//��ѯ���������Ϣ
+	//查询购货单
 	private void doGetPurchaseInfo(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String psid = request.getParameter("psid");
 		JSONObject json = null;
@@ -101,7 +101,7 @@ public class CenWarehouseServlet extends HttpServlet {
 		pw.print(json);
 		pw.close();
     }
-	//���빺�������Ϣ
+	//插入购货入库信息
 	private void doPurchaseInInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 		String psid = request.getParameter("psid");
 		String actualnum = request.getParameter("acnum");
@@ -118,7 +118,7 @@ public class CenWarehouseServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("Central warehouse purchases.jsp").forward(request, response);
 	}
-	//��ѯ��������
+	//查询要调拨任务信息
 	private void doGetTaskListByDate(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException, ServletException {
 
 		String date = null;
@@ -126,11 +126,11 @@ public class CenWarehouseServlet extends HttpServlet {
 		String pagenum = request.getParameter("pageNum");
 		int pageNum = 1;
 		if(pagenum!=null && !"".equals(pagenum)){
-			//���ҳ���ѯ		
+			//锟斤拷锟揭筹拷锟斤拷询		
 			date = (String) request.getSession().getAttribute("date");
 			pageNum = Integer.parseInt(pagenum);
 		}else{
-			//���ҳ�水ť��ѯ
+			//锟斤拷锟揭筹拷姘磁ワ拷锟窖�
 			date = request.getParameter("search");
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -142,7 +142,7 @@ public class CenWarehouseServlet extends HttpServlet {
 		request.getSession().setAttribute("pagecount", pageCount);
 		request.getRequestDispatcher("Central warehouse transfer out.jsp").forward(request, response);
 	}
-	//������ⵥ
+	//插入调拨出库信息
 	private void doWarehouseOutInfo(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
 		String[] ids = request.getParameterValues("chk");
 		int[] idss = new int[ids.length];
@@ -154,7 +154,7 @@ public class CenWarehouseServlet extends HttpServlet {
 		
 		response.sendRedirect(request.getContextPath()+"/cenWarehouseServlet?action=searchTaskDate&pageNum="+pageNum);
 	}
-	//��ѯ�˻��������
+	//查询退货入库信息
 	private void doGetReturnInInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String task_id = request.getParameter("taskid");
 		JSONObject json = null;

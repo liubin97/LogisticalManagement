@@ -1,7 +1,7 @@
 /**
  * @package com.neuedu.model.service
  * @author liubin
- * @date 2018ï¿½ï¿½6ï¿½ï¿½19ï¿½ï¿½
+ * @date 2018é”Ÿæ–¤æ‹·6é”Ÿæ–¤æ‹·19é”Ÿæ–¤æ‹·
 */
 package com.neuedu.model.service;
 
@@ -24,22 +24,22 @@ import net.sf.json.JSONObject;
 public class SubWarehouseService {
 	private static SubWarehouseService service = new SubWarehouseService();
 	
-	//µ¥ÀıÄ£Ê½
+	//å•ä¾‹æ¨¡å¼
 	public static SubWarehouseService getInstance() {
 		return service;
 	}
-	//»ñÈ¡Èë¿âÈÎÎñµ¥ 
+	//è·å–å…¥åº“ä»»åŠ¡å• 
 	public JSONObject getTaskListIn(int task_id) {
 		Connection conn = DBUtil.getConn();
 		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
 		JSONObject json = swd.getTaskListIn(task_id);
 		return json;
 	}
-	//²åÈëÈë¿âĞÅÏ¢
+	//æ’å…¥å…¥åº“ä¿¡æ¯
 	public void insertInInfo(SubWarehouseInInfo swin) throws SQLException {
 		
 		Connection conn = DBUtil.getConn();
-		//¿ªÆôÊÂÎñ
+		//å¼€å¯äº‹åŠ¡
 		DBUtil.beginTransaction(conn);
 		try {
 			SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
@@ -52,7 +52,7 @@ public class SubWarehouseService {
 		}
 		
 	}
-	//»ñÈ¡³ö¿âÈÎÎñµ¥
+	//è·å–å‡ºåº“ä»»åŠ¡å•
 	public JSONObject getTaskListOut(int task_id) {
 		Connection conn = DBUtil.getConn();
 		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
@@ -60,10 +60,10 @@ public class SubWarehouseService {
 		return json;
 	}
 	
-	//²åÈëÁì»õĞÅÏ¢
+	//æ’å…¥é¢†è´§ä¿¡æ¯
 	public void insertRecvGoodsInfo(RecvGoodsInfo rin) throws SQLException {
 		Connection conn = DBUtil.getConn();
-		//¿ªÆôÊÂÎñ
+		//å¼€å¯äº‹åŠ¡
 		DBUtil.beginTransaction(conn);
 		try {
 			SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
@@ -76,7 +76,7 @@ public class SubWarehouseService {
 		}
 	}
 	
-	//»ñÈ¡ÍË»õµÇ¼ÇÈÎÎñµ¥
+	//è·å–é€€è´§ç™»è®°ä»»åŠ¡å•
 	public JSONObject getReturnInTaskList(int task_id) {
 		Connection conn = DBUtil.getConn();
 		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
@@ -84,10 +84,10 @@ public class SubWarehouseService {
 		return json;
 	}
 	
-	//²åÈëÍË»õµÇ¼ÇĞÅÏ¢
+	//æ’å…¥é€€è´§ç™»è®°ä¿¡æ¯
 	public void insertReturnRegisterInfo(ReturnRegisterInfo rin) throws SQLException {
 		Connection conn = DBUtil.getConn();
-		//¿ªÆôÊÂÎñ
+		//å¼€å¯äº‹åŠ¡
 		DBUtil.beginTransaction(conn);
 		try {
 			SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
@@ -100,14 +100,14 @@ public class SubWarehouseService {
 		}
 	}
 	
-	//²éÑ¯ÍË»õ³ö¿âĞÅÏ¢
+	//æŸ¥è¯¢é€€è´§å‡ºåº“ä¿¡æ¯
 	public JSONArray getReturnOutTaskList(Date start_date,Date end_date,int pagenum) {
 		Connection conn = DBUtil.getConn();
 		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
 		JSONArray json = swd.getReturnOutTaskList(start_date, end_date,pagenum);
 		return json;
 	}
-	//²éÑ¯ÍË»õ³ö¿âÒ³Êı
+	//æŸ¥è¯¢é€€è´§å‡ºåº“é¡µæ•°
 	public int getReturnOutPage(Date start_date,Date end_date) {
 		Connection conn = DBUtil.getConn();
 		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
@@ -115,10 +115,10 @@ public class SubWarehouseService {
 		return count;
 	}
 	
-	//²åÈëÍË»õ³ö¿âĞÅÏ¢
+	//æ’å…¥é€€è´§å‡ºåº“ä¿¡æ¯
 	public void insertReturnOutInfo(int []ids) throws SQLException {
 		Connection conn = DBUtil.getConn();
-		//¿ªÆôÊÂÎñ
+		//å¼€å¯äº‹åŠ¡
 		DBUtil.beginTransaction(conn);
 		try {
 			SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);

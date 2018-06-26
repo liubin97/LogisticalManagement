@@ -162,7 +162,7 @@
                                 </div>
                             </form>
 
-                            <form action="cenWarehouseServlet?action=submitWhIN" method="post">
+                            <form action="cenWarehouseServlet?action=submitWhOut" method="post">
                             <div class="am-u-sm-12">
                                     <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
                                         <thead>

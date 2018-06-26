@@ -1,7 +1,7 @@
 /**
  * @package com.neuedu.model.dao
  * @author liubin
- * @date 2018Äê6ÔÂ19ÈÕ
+ * @date 2018å¹´6æœˆ19æ—¥
 */
 package com.neuedu.model.dao;
 
