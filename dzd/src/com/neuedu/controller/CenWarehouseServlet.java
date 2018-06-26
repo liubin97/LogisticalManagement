@@ -146,7 +146,6 @@ public class CenWarehouseServlet extends HttpServlet {
 		int[] idss = new int[ids.length];
 		for(int i  = 0;i<ids.length;i++){
 			idss[i] = Integer.parseInt(ids[i]);
-			//System.out.println(idss[i]);
 		}
 		CenWarehouseService.getInstance().insertOutWarehouseInfo(idss);
 		int pageNum = (Integer)request.getSession().getAttribute("pageNum");

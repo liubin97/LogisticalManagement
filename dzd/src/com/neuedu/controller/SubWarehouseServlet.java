@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.neuedu.model.po.RecvGoodsInfo;
+import com.neuedu.model.po.ReturnRegisterInfo;
 import com.neuedu.model.po.SubWarehouseInInfo;
 import com.neuedu.model.service.SubWarehouseService;
 
@@ -73,6 +74,15 @@ public class SubWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if("searchReturnRegister".equals(action)) {//查询退货登记信息
+			doGetReturnRegisterInfo(request, response);
+		} else if("submitReturnRegister".equals(action)) {//插入退货登记信息
+			try {
+				doRetrunRegister(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	//查询入库任务单
@@ -88,7 +98,6 @@ public class SubWarehouseServlet extends HttpServlet {
 	//插入调拨入库信息
 	private void doTransferIn(HttpServletRequest request, HttpServletResponse response) throws ParseException, SQLException, ServletException, IOException {
 		String task_id = request.getParameter("taskid");
-		//String actualnum = request.getParameter("acnum");
 		String indate = request.getParameter("indate");
 		String note = request.getParameter("note");
 		SubWarehouseInInfo swin = new SubWarehouseInInfo();
@@ -125,5 +134,24 @@ public class SubWarehouseServlet extends HttpServlet {
 		SubWarehouseService.getInstance().insertRecvGoodsInfo(rin);
 		request.getRequestDispatcher("picking.jsp").forward(request, response);
 	}
-
+	//查询退货登记任务单
+	private void doGetReturnRegisterInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String task_id = request.getParameter("taskid");
+		JSONObject json = SubWarehouseService.getInstance().getReturnInTaskList(Integer.parseInt(task_id));
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();	
+		pw.print(json);
+		pw.close();
+	}
+	//插入退货登记信息
+	private void doRetrunRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		String task_id = request.getParameter("taskid");
+		String actual_num = request.getParameter("acnum");
+		ReturnRegisterInfo rin = new ReturnRegisterInfo();
+		rin.setTask_id(Integer.parseInt(task_id));
+		rin.setActual_num(Integer.parseInt(actual_num));
+		rin.setOperate_date(new Date());
+		SubWarehouseService.getInstance().insertReturnRegisterInfo(rin);
+		request.getRequestDispatcher("Return register.jsp").forward(request, response);
+	}
 }

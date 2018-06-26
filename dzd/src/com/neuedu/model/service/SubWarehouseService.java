@@ -13,6 +13,7 @@ import com.neuedu.model.dao.CenWarehouseDAOImp;
 import com.neuedu.model.dao.SubWarehouseDAO;
 import com.neuedu.model.dao.SubWarehouseDAOImp;
 import com.neuedu.model.po.RecvGoodsInfo;
+import com.neuedu.model.po.ReturnRegisterInfo;
 import com.neuedu.model.po.SubWarehouseInInfo;
 import com.neuedu.utils.DBUtil;
 
@@ -65,6 +66,30 @@ public class SubWarehouseService {
 		try {
 			SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
 			swd.insertRecvGoodsInfo(rin);
+			DBUtil.commit(conn);
+		}catch (Exception e) {
+			DBUtil.rollback(conn);
+		} finally {
+			DBUtil.closeConn(conn);
+		}
+	}
+	
+	//获取退货登记任务单
+	public JSONObject getReturnInTaskList(int task_id) {
+		Connection conn = DBUtil.getConn();
+		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
+		JSONObject json = swd.getReturnInTaskList(task_id);
+		return json;
+	}
+	
+	//插入退货登记信息
+	public void insertReturnRegisterInfo(ReturnRegisterInfo rin) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		//开启事务
+		DBUtil.beginTransaction(conn);
+		try {
+			SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
+			swd.insertReturnRegisterInfo(rin);
 			DBUtil.commit(conn);
 		}catch (Exception e) {
 			DBUtil.rollback(conn);

@@ -147,7 +147,6 @@
                                             </span>
                                         </div>
                                     </div>
-
                                 </div>
                             </form>
 
@@ -167,12 +166,6 @@
                                     </div>
                                 </div>
 
-                                <%--<div class="am-form-group">--%>
-                                    <%--<label class="am-u-sm-3 am-form-label">实际数量</label>--%>
-                                    <%--<div class="am-u-sm-9">--%>
-                                        <%--<input type="text" id="acnum" name="acnum" required>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
 
                                 <div class="am-form-group">
                                     <label  class="am-u-sm-3 am-form-label">入库日期</label>

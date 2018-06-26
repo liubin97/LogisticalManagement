@@ -13,6 +13,7 @@ import java.sql.SQLException;
 
 import com.neuedu.model.po.Product;
 import com.neuedu.model.po.RecvGoodsInfo;
+import com.neuedu.model.po.ReturnRegisterInfo;
 import com.neuedu.model.po.SubWarehouseInInfo;
 import com.neuedu.utils.DBUtil;
 
@@ -157,8 +158,50 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.neuedu.model.dao.SubWarehouseDAO#getTaskListOut(int)
+	/* 
+	 * 获取退货入库 任务单
 	 */
-	
+	public JSONObject getReturnInTaskList(int task_id) {
+		PreparedStatement ps = null;
+		JSONObject json = new JSONObject();
+		try {
+			ps = conn.prepareStatement(" select * from task_order_return_view where task_list_id =? and task_status=8  ");
+			ps.setInt(1, task_id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				json.put("task_list_id", task_id);
+				json.put("product_name", getProductById(rs.getInt("prod_id")).getProduct_name());
+				json.put("product_num", rs.getInt("actual_num"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
+		return json;
+	}
+
+	/* 
+	 * 插入退货登记信息
+	 */
+	public void insertReturnRegisterInfo(ReturnRegisterInfo rin) {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(" insert into return_register_info (task_list_id,actual_number,operate_date) "
+					+ "values(?,?,?) ");
+			ps.setInt(1, rin.getTask_id());
+			ps.setInt(2, rin.getActual_num());
+			ps.setDate(3, new Date(rin.getOperate_date().getTime()));
+			ps.executeUpdate();
+			editTaskListStatus(rin.getTask_id(), 9);//更改任务单状态到分站库房退货入库
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtil.closePS(ps);
+		}
+		
+	}
+
 }

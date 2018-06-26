@@ -175,7 +175,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	}
 
 	/* 
-	 * 通过日期查询任务单信息
+	 * 通过日期查询要出库任务单信息
 	 */
 	public JSONArray getTaskListByDate(Date date, int pageNum) {
 		PreparedStatement ps = null;
