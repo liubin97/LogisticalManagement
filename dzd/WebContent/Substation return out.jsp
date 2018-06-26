@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html >
 <html lang="cn">
 
 <head>
@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
-
+    <script src="assets/js/submit.js"></script>
+  
 </head>
 
 <body data-type="widgets">
@@ -31,7 +32,7 @@
 <div class="am-g tpl-g">
     <!-- 头部 -->
     <header>
-        <!-- logo -->
+        <!-- logo -->	
         <div class="am-fl tpl-header-logo">
             <a href="javascript:;"><img src="assets/img/logo.png" alt=""></a>
         </div>
@@ -136,19 +137,19 @@
 
                         <!--查询表单-->
                         <div class="widget-body  am-fr">
-                            <form class="am-form-inline" role="form">
+                            <form class="am-form-inline" action="subWarehouseServlet?action=searchSubReturnOut" method="post" data-am-validator>
                                 <div class="am-u-lg-6 am-u-lg-centered">
                                     <div class="am-form-group">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field " placeholder="请选择退货开始日期" data-am-datepicker="">
+                                            <input type="text" class="am-form-field " name="starttime" placeholder="请选择退货开始日期" data-am-datepicker readonly required >
                                         </div>
                                     </div>
 
                                     <div class="am-form-group">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field "  placeholder="请输入退货结束日期 " data-am-datepicker="">
+                                            <input type="text" class="am-form-field " name="endtime" placeholder="请输入退货结束日期 " data-am-datepicker readonly required >
                                             <span class="am-input-group-btn">
-                                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
                                              </span>
                                         </div>
                                     </div>
@@ -156,96 +157,53 @@
                             </form>
 
 
-                            <div class="am-u-sm-12">
-                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
-                                    <thead>
-                                    <tr>
-                                        <th>商品名称</th>
-                                        <th>计量单位</th>
-                                        <th>退货数量</th>
-                                        <th>退货日期</th>
-                                        <th>选择</th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="gradeX">
-                                        <td>超级超级超级大的西瓜</td>
-                                        <td>kg</td>
-                                        <td>123</td>
-                                        <td>2018-01-01</td>
-                                        <td>
-                                            <input class="am-checkbox" type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>苹果梨</td>
-                                        <td>kg</td>
-                                        <td>11</td>
-                                        <td>2018-01-01</td>
-                                        <td>
-                                            <input class="am-checkbox" type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>超级超级超级大的西瓜</td>
-                                        <td>kg</td>
-                                        <td>11</td>
-                                        <td>2018-01-01</td>
-                                        <td>
-                                            <input class="am-checkbox" type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>超级超级超级大的葡萄</td>
-                                        <td>kg</td>
-                                        <td>1</td>
-                                        <td>2018-01-01</td>
-                                        <td>
-                                            <input class="am-checkbox" type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>超级超级超级大的哈密瓜</td>
-                                        <td>kg</td>
-                                        <td>1</td>
-                                        <td>2018-01-01</td>
-                                        <td>
-                                            <input class="am-checkbox" type="checkbox">
-                                        </td>
-                                    </tr>
-
-                                    <tr class="even gradeC">
-                                        <td>超级超级超级大的水果蔬菜</td>
-                                        <td>kg</td>
-                                        <td>1</td>
-                                        <td>2018-01-01</td>
-                                        <td>
-                                            <input class="am-checkbox" type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <!-- more data -->
-                                    </tbody>
-                                </table>
-                            </div>
+                            <form action="subWarehouseServlet?action=submitReturnOut" method="post">
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                        <tr>
+                                            <th>选择操作</th>
+                                            <th>商品名称</th>
+                                            <th>计量单位</th>
+                                            <th>退货数量</th>
+                                            <th>退货日期</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${resultList}" var="item">
+                                            <tr>
+                                                <td>
+                                                    <input name="chk" type="checkbox"  value="${item.taskid}">
+                                                </td>
+                                                <td name="productname">${item.productname}</td>
+                                                <td name="unit">${item.unit}</td>
+                                                <td name="productnum">${item.productnum}</td>
+                                                <td name="returndate">${item.returndate}</td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="am-u-sm-12">
+                                    <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success" id="doc-confirm-toggle" onclick="selectSubCol()">
+                                        退货出库
+                                    </button>
+                                </div>
+                            </form>
 
                             <div class="am-u-lg-12 am-cf">
-
-                                <div class="am-u-sm-2">
-
-                                    <button type="button" class="am-btn am-btn-primary" data-am-modal="{target: '#my-alert'}">退货</button>
-
-                                </div>
-
                                 <div class="am-fr">
                                     <ul class="am-pagination tpl-pagination">
-                                        <li class="am-disabled"><a href="#">«</a></li>
-                                        <li class="am-active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">»</a></li>
+                                        <li><a href="subWarehouseServlet?action=searchSubReturnOut&pageNum=${(pageNum<=1)?pageNum:(pageNum-1)}">«</a></li>
+                                        <c:forEach begin="1" end="${pagecount}" var="p">
+                                            <c:if test="${p==pageNum}">
+                                                <li class="am-active"><a>${p}</a></li>
+                                            </c:if>
+                                            <c:if test="${p!=pageNum}">
+                                                <a href="subWarehouseServlet?action=searchSubReturnOut&pageNum=${p}">${p}</a>
+                                            </c:if>
+                                            <li><a href="subWarehouseServlet?action=searchSubReturnOut&pageNum=${(pageNum>=pagecount)?pagecount:(pageNum+1)}">»</a></li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
@@ -258,17 +216,45 @@
     </div>
 </div>
 
-<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd"></div>
+        <div class="am-modal-hd"><h3>调拨出库</h3></div>
         <div class="am-modal-bd">
-            退货成功！
+            <p>你选择的调拨信息如下，是否要调拨出库?</p>
+            <table class="am-table">
+                <thead>
+                <tr>
+                    <th>商品名称</th>
+                    <th>计量单位</th>
+                    <th>退货数量</th>
+                    <th>退货日期</th>
+                </tr>
+                </thead>
+                <tbody align="left" id="tbody">
+
+                </tbody>
+            </table>
+
         </div>
         <div class="am-modal-footer">
-            <span class="am-modal-btn">确定</span>
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>出库</span>
         </div>
     </div>
 </div>
+
+
+<%--<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">--%>
+    <%--<div class="am-modal-dialog">--%>
+        <%--<div class="am-modal-hd"></div>--%>
+        <%--<div class="am-modal-bd">--%>
+            <%--退货成功！--%>
+        <%--</div>--%>
+        <%--<div class="am-modal-footer">--%>
+            <%--<span class="am-modal-btn">确定</span>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
 
 
 <script src="assets/js/amazeui.min.js"></script>

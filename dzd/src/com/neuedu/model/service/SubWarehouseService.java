@@ -6,6 +6,7 @@
 package com.neuedu.model.service;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import com.neuedu.model.dao.CenWarehouseDAO;
@@ -17,6 +18,7 @@ import com.neuedu.model.po.ReturnRegisterInfo;
 import com.neuedu.model.po.SubWarehouseInInfo;
 import com.neuedu.utils.DBUtil;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class SubWarehouseService {
@@ -90,6 +92,37 @@ public class SubWarehouseService {
 		try {
 			SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
 			swd.insertReturnRegisterInfo(rin);
+			DBUtil.commit(conn);
+		}catch (Exception e) {
+			DBUtil.rollback(conn);
+		} finally {
+			DBUtil.closeConn(conn);
+		}
+	}
+	
+	//查询退货出库信息
+	public JSONArray getReturnOutTaskList(Date start_date,Date end_date,int pagenum) {
+		Connection conn = DBUtil.getConn();
+		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
+		JSONArray json = swd.getReturnOutTaskList(start_date, end_date,pagenum);
+		return json;
+	}
+	//查询退货出库页数
+	public int getReturnOutPage(Date start_date,Date end_date) {
+		Connection conn = DBUtil.getConn();
+		SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
+		int count = swd.getReturnOutPage(start_date, end_date);
+		return count;
+	}
+	
+	//插入退货出库信息
+	public void insertReturnOutInfo(int []ids) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		//开启事务
+		DBUtil.beginTransaction(conn);
+		try {
+			SubWarehouseDAO swd = new SubWarehouseDAOImp(conn);
+			swd.insertReturnOutInfo(ids);
 			DBUtil.commit(conn);
 		}catch (Exception e) {
 			DBUtil.rollback(conn);

@@ -282,13 +282,15 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 				ps.setDate(2, date);
 				ps.executeUpdate();
 				ps.close();
-				editTaskListStatus(ids[i],2);
+				editTaskListStatus(ids[i],2);//修改任务单状态到中心库房出库;
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		} finally {
+			DBUtil.closePS(ps);
+		}
 	}
 
 	

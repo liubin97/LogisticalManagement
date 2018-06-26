@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import com.neuedu.model.po.ReturnRegisterInfo;
 import com.neuedu.model.po.SubWarehouseInInfo;
 import com.neuedu.model.service.SubWarehouseService;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -79,6 +81,20 @@ public class SubWarehouseServlet extends HttpServlet {
 		} else if("submitReturnRegister".equals(action)) {//插入退货登记信息
 			try {
 				doRetrunRegister(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if("searchSubReturnOut".equals(action)) {//查询退货出库信息
+			try {
+				doGetReturnOut(request, response);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if("submitReturnOut".equals(action)) {
+			try {
+				doReturnOut(request, response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -153,5 +169,47 @@ public class SubWarehouseServlet extends HttpServlet {
 		rin.setOperate_date(new Date());
 		SubWarehouseService.getInstance().insertReturnRegisterInfo(rin);
 		request.getRequestDispatcher("Return register.jsp").forward(request, response);
+	}
+	//查询退货出库任务单
+	private void doGetReturnOut(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException, IOException {
+		String start_date = null;
+		String end_date = null;
+		String pagenum = request.getParameter("pageNum");
+		int pageNum = 1;
+		if(pagenum!=null && !"".equals(pagenum)){
+			//点击页码查询
+			System.out.println(pagenum);
+			start_date = (String) request.getSession().getAttribute("starttime");
+			end_date = (String) request.getSession().getAttribute("endtime");
+			pageNum = Integer.parseInt(pagenum);
+		}else{
+			//点击页面按钮查询
+			start_date = request.getParameter("starttime");
+			end_date = request.getParameter("endtime");
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		java.sql.Date sdate = new java.sql.Date(sdf.parse(start_date).getTime());
+		java.sql.Date edate = new java.sql.Date(sdf.parse(end_date).getTime());
+		JSONArray json = SubWarehouseService.getInstance().getReturnOutTaskList(sdate,edate,pageNum);
+		int pageCount = SubWarehouseService.getInstance().getReturnOutPage(sdate,edate);
+		request.setAttribute("resultList", json);
+		request.getSession().setAttribute("starttime", start_date);
+		request.getSession().setAttribute("endtime", end_date);
+		request.getSession().setAttribute("pageNum", pageNum);
+		request.getSession().setAttribute("pagecount", pageCount);
+		request.getRequestDispatcher("Substation return out.jsp").forward(request, response);
+	}
+	//插入退货出库信息
+	private void doReturnOut(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+		String[] ids = request.getParameterValues("chk");
+		int[] idss = new int[ids.length];
+		for(int i  = 0;i<ids.length;i++){
+			idss[i] = Integer.parseInt(ids[i]);
+		}
+		SubWarehouseService.getInstance().insertReturnOutInfo(idss);
+		int pageNum = (Integer)request.getSession().getAttribute("pageNum");
+		
+		response.sendRedirect(request.getContextPath()+"/subWarehouseServlet?action=searchSubReturnOut&pageNum="+pageNum);
 	}
 }

@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/submit.js"></script>
-
 </head>
 
 <body data-type="widgets">
@@ -196,10 +195,8 @@
                                     </button>
                                 </div>
                             </form>
-                            <div class="am-u-lg-12 am-cf">	
 
-
-
+                            <div class="am-u-lg-12 am-cf">
                                 <div class="am-fr">
                                     <ul class="am-pagination tpl-pagination">
                                         <li><a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${(pageNum<=1)?pageNum:(pageNum-1)}">«</a></li>
@@ -215,6 +212,7 @@
                                     </ul>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
