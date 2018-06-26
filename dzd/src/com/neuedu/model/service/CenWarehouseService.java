@@ -1,7 +1,7 @@
 /**
  * @package com.neuedu.model.service
  * @author liubin
- * @date 2018Äê6ÔÂ19ÈÕ
+ * @date 2018éªï¿½6éˆï¿½19éƒï¿½
 */
 package com.neuedu.model.service;
 
@@ -25,7 +25,7 @@ public class CenWarehouseService {
 	public static CenWarehouseService getInstance() {
 		return service;
 	}
-
+	
 	public JSONObject getPurchaseInfo(int psid) throws SQLException{
 		Connection conn = DBUtil.getConn();
 		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
@@ -38,7 +38,7 @@ public class CenWarehouseService {
 	
 	public void insertInWarehouseInfo(CenWarehouseInInfo cwin) throws SQLException {
 		Connection conn = DBUtil.getConn();
-		//¿ªÆôÊÂÎñ
+		//å¼€å¯äº‹åŠ¡
 		DBUtil.beginTransaction(conn);
 		try {
 			CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
@@ -75,7 +75,7 @@ public class CenWarehouseService {
 	
 	public void insertOutWarehouseInfo(int []ids) throws SQLException {
 		Connection conn = DBUtil.getConn();
-		//¿ªÆôÊÂÎñ
+		//å¼€å¯äº‹åŠ¡
 		DBUtil.beginTransaction(conn);
 		try {
 			CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);

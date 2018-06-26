@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
-
+    <script type="text/javascript" src="assets/js/search.js"></script>
 </head>
 
 <body data-type="widgets">
@@ -111,8 +111,6 @@
             </li>
 
             <li class="sidebar-nav-link">
-
-
                 <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-table sidebar-nav-link-logo"></i> 退货管理
                     <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
@@ -149,44 +147,41 @@
                                 <div class="am-form-group">
                                     <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field tpl-form-no-bg" placeholder="请输入退货单号查询退货单" >
+                                            <input type="text" class="am-form-field tpl-form-no-bg" name="search"  id="search" placeholder="请输入任务单号查询退货单" >
                                             <span class="am-input-group-btn">
-                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" onclick="doSearchReturnInById()"></button>
                                             </span>
                                         </div>
                                     </div>
-
                                 </div>
                             </form>
 
 
-                            <form class="am-form tpl-form-line-form">
-
+                            <form class="am-form tpl-form-line-form" action="cenWarehouseServlet?action=submitReturnIn" data-am-validator>
+                                <input type="hidden" id="taskid" name="taskid">
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品名称</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" value="电脑" readonly="readonly">
+                                        <input type="text" id="productname" name="productname"  readonly="readonly" required>
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品数量</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" value="100" readonly="readonly">
+                                        <input type="text" id="productnum" name="productnum" readonly="readonly" required>
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">实际数量</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" value="100">
+                                        <input type="text" id="acnum" name="acnum" required>
                                     </div>
                                 </div>
-
-
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success " data-am-modal="{target: '#my-alert'}">退货入库</button>
+                                        <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success " >退货入库</button>
                                     </div>
                                 </div>
                             </form>

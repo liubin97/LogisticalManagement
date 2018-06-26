@@ -47,14 +47,14 @@ public class SubWarehouseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("½øÈëSubWarehouseServlet");
-		//Éè¶¨±àÂë¸ñÊ½
+		System.out.println("ï¿½ï¿½ï¿½ï¿½SubWarehouseServlet");
+		//ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
-		//²éÕÒÈÎÎñµ¥
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if("searchTaskIn".equals(action)){
 			doGetTaskIn(request, response);
-		} else if("submitTaskIn".equals(action)) {//Ìá½»µ÷²¦Èë¿âµ¥
+		} else if("submitTaskIn".equals(action)) {//ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½âµ¥
 			try {
 				doTransferIn(request,response);
 			} catch (ParseException e) {
@@ -64,9 +64,9 @@ public class SubWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchTaskOut".equals(action)) {//²éÑ¯Áì»õµ¥
+		} else if("searchTaskOut".equals(action)) {//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½
 			doGetTaskOut(request, response);
-		} else if("submitTaskOut".equals(action)) {//Ìá½»³ö¿âÐÅÏ¢
+		} else if("submitTaskOut".equals(action)) {//ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 			try {
 				doRecvGoods(request, response);
 			} catch (SQLException e) {
@@ -76,16 +76,16 @@ public class SubWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchReturnRegister".equals(action)) {//²éÑ¯ÍË»õµÇ¼ÇÐÅÏ¢
+		} else if("searchReturnRegister".equals(action)) {//ï¿½ï¿½Ñ¯ï¿½Ë»ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½Ï¢
 			doGetReturnRegisterInfo(request, response);
-		} else if("submitReturnRegister".equals(action)) {//²åÈëÍË»õµÇ¼ÇÐÅÏ¢
+		} else if("submitReturnRegister".equals(action)) {//ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½Ï¢
 			try {
 				doRetrunRegister(request, response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchSubReturnOut".equals(action)) {//²éÑ¯ÍË»õ³ö¿âÐÅÏ¢
+		} else if("searchSubReturnOut".equals(action)) {//ï¿½ï¿½Ñ¯ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 			try {
 				doGetReturnOut(request, response);
 			} catch (ParseException e) {
@@ -101,7 +101,7 @@ public class SubWarehouseServlet extends HttpServlet {
 			}
 		}
 	}
-	//²éÑ¯Èë¿âÈÎÎñµ¥
+	//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private void doGetTaskIn(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String task_id = request.getParameter("taskid");
 		JSONObject json = null;
@@ -111,7 +111,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		pw.print(json);
 		pw.close();
 	}
-	//²åÈëµ÷²¦Èë¿âÐÅÏ¢
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	private void doTransferIn(HttpServletRequest request, HttpServletResponse response) throws ParseException, SQLException, ServletException, IOException {
 		String task_id = request.getParameter("taskid");
 		String indate = request.getParameter("indate");
@@ -124,7 +124,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		SubWarehouseService.getInstance().insertInInfo(swin);
 		request.getRequestDispatcher("Substation warehouse transfer  in.jsp").forward(request, response);
 	}
-	//²éÑ¯³ö¿âÈÎÎñµ¥
+	//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private void doGetTaskOut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String task_id = request.getParameter("taskid");
 		JSONObject json = null;
@@ -134,7 +134,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		pw.print(json);
 		pw.close();
 	}
-	//²åÈëÁì»õÐÅÏ¢
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	private void doRecvGoods(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, ParseException {
 		String task_id = request.getParameter("taskid");
 		String outdate = request.getParameter("outdate");
@@ -150,7 +150,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		SubWarehouseService.getInstance().insertRecvGoodsInfo(rin);
 		request.getRequestDispatcher("picking.jsp").forward(request, response);
 	}
-	//²éÑ¯ÍË»õµÇ¼ÇÈÎÎñµ¥
+	//ï¿½ï¿½Ñ¯ï¿½Ë»ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½ï¿½ï¿½
 	private void doGetReturnRegisterInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String task_id = request.getParameter("taskid");
 		JSONObject json = SubWarehouseService.getInstance().getReturnInTaskList(Integer.parseInt(task_id));
@@ -159,7 +159,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		pw.print(json);
 		pw.close();
 	}
-	//²åÈëÍË»õµÇ¼ÇÐÅÏ¢
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½Ï¢
 	private void doRetrunRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		String task_id = request.getParameter("taskid");
 		String actual_num = request.getParameter("acnum");
@@ -170,20 +170,20 @@ public class SubWarehouseServlet extends HttpServlet {
 		SubWarehouseService.getInstance().insertReturnRegisterInfo(rin);
 		request.getRequestDispatcher("Return register.jsp").forward(request, response);
 	}
-	//²éÑ¯ÍË»õ³ö¿âÈÎÎñµ¥
+	//ï¿½ï¿½Ñ¯ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private void doGetReturnOut(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException, IOException {
 		String start_date = null;
 		String end_date = null;
 		String pagenum = request.getParameter("pageNum");
 		int pageNum = 1;
 		if(pagenum!=null && !"".equals(pagenum)){
-			//µã»÷Ò³Âë²éÑ¯
+			//ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½Ñ¯
 			System.out.println(pagenum);
 			start_date = (String) request.getSession().getAttribute("starttime");
 			end_date = (String) request.getSession().getAttribute("endtime");
 			pageNum = Integer.parseInt(pagenum);
 		}else{
-			//µã»÷Ò³Ãæ°´Å¥²éÑ¯
+			//ï¿½ï¿½ï¿½Ò³ï¿½æ°´Å¥ï¿½ï¿½Ñ¯
 			start_date = request.getParameter("starttime");
 			end_date = request.getParameter("endtime");
 		}
@@ -200,7 +200,7 @@ public class SubWarehouseServlet extends HttpServlet {
 		request.getSession().setAttribute("pagecount", pageCount);
 		request.getRequestDispatcher("Substation return out.jsp").forward(request, response);
 	}
-	//²åÈëÍË»õ³ö¿âÐÅÏ¢
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	private void doReturnOut(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
 		String[] ids = request.getParameterValues("chk");
 		int[] idss = new int[ids.length];

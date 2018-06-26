@@ -45,14 +45,14 @@ public class CenWarehouseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("½øÈëCenWarehouseServlet");
-		//Éè¶¨±àÂë¸ñÊ½
+		System.out.println("ï¿½ï¿½ï¿½ï¿½CenWarehouseServlet");
+		//ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
-		//²éÕÒ¹º»õµ¥
+		//ï¿½ï¿½ï¿½Ò¹ï¿½ï¿½ï¿½ï¿½ï¿½
 		if("searchPs".equals(action)){
             doGetPurchaseInfo(request,response);
-        } else if("submitPs".equals(action)) {//Ìá½»¹º»õÈë¿âµ¥
+        } else if("submitPs".equals(action)) {//ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½âµ¥
 			try {
 				doPurchaseInInfo(request, response);
 			} catch (ParseException e) {
@@ -62,7 +62,7 @@ public class CenWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchTaskDate".equals(action)) {//¸ù¾ÝÈÕÆÚ²éÑ¯ÈÎÎñµ¥
+		} else if("searchTaskDate".equals(action)) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
 			try {
 				doGetTaskListByDate(request, response);
 			} catch (SQLException e) {
@@ -79,9 +79,11 @@ public class CenWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if("searchReturnIn".equals(action)) {
+			doGetReturnInInfo(request, response);
 		}
 	}
-
+	//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	private void doGetPurchaseInfo(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String psid = request.getParameter("psid");
 		JSONObject json = null;
@@ -99,7 +101,7 @@ public class CenWarehouseServlet extends HttpServlet {
 		pw.print(json);
 		pw.close();
     }
-	
+	//ï¿½ï¿½ï¿½ë¹ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	private void doPurchaseInInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 		String psid = request.getParameter("psid");
 		String actualnum = request.getParameter("acnum");
@@ -116,7 +118,7 @@ public class CenWarehouseServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("Central warehouse purchases.jsp").forward(request, response);
 	}
-	
+	//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private void doGetTaskListByDate(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException, ServletException {
 
 		String date = null;
@@ -124,11 +126,11 @@ public class CenWarehouseServlet extends HttpServlet {
 		String pagenum = request.getParameter("pageNum");
 		int pageNum = 1;
 		if(pagenum!=null && !"".equals(pagenum)){
-			//µã»÷Ò³Âë²éÑ¯		
+			//ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½Ñ¯		
 			date = (String) request.getSession().getAttribute("date");
 			pageNum = Integer.parseInt(pagenum);
 		}else{
-			//µã»÷Ò³Ãæ°´Å¥²éÑ¯
+			//ï¿½ï¿½ï¿½Ò³ï¿½æ°´Å¥ï¿½ï¿½Ñ¯
 			date = request.getParameter("search");
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -140,7 +142,7 @@ public class CenWarehouseServlet extends HttpServlet {
 		request.getSession().setAttribute("pagecount", pageCount);
 		request.getRequestDispatcher("Central warehouse transfer out.jsp").forward(request, response);
 	}
-
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½âµ¥
 	private void doWarehouseOutInfo(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
 		String[] ids = request.getParameterValues("chk");
 		int[] idss = new int[ids.length];
@@ -152,4 +154,15 @@ public class CenWarehouseServlet extends HttpServlet {
 		
 		response.sendRedirect(request.getContextPath()+"/cenWarehouseServlet?action=searchTaskDate&pageNum="+pageNum);
 	}
+	//ï¿½ï¿½Ñ¯ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private void doGetReturnInInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String task_id = request.getParameter("taskid");
+		JSONObject json = null;
+		
+        response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();	
+		pw.print(json);
+		pw.close();
+	}
+	
 }

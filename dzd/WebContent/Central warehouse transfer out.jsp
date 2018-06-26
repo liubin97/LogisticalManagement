@@ -207,8 +207,8 @@
 	                                        <c:if test="${p!=pageNum}">
 	                                            <a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${p}">${p}</a>
 	                                        </c:if>
-	                                        <li><a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${(pageNum>=pagecount)?pagecount:(pageNum+1)}">»</a></li>
                                    	 	</c:forEach>
+                                        <li><a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${(pageNum>=pagecount)?pagecount:(pageNum+1)}">»</a></li>
                                     </ul>
                                 </div>
                             </div>
