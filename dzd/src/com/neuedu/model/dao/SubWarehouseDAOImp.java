@@ -227,7 +227,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return count;
+		return (int) Math.ceil(count / (pageSize * 1.0));
 	}
 	
 	/*

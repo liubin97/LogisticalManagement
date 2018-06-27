@@ -149,7 +149,7 @@
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                                             <input type="text" class="am-form-field " name="endtime" placeholder="请输入退货结束日期 " data-am-datepicker readonly required >
                                             <span class="am-input-group-btn">
-                                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
+                                                <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="submit"></button>
                                              </span>
                                         </div>
                                     </div>
@@ -200,7 +200,7 @@
                                                 <li class="am-active"><a>${p}</a></li>
                                             </c:if>
                                             <c:if test="${p!=pageNum}">
-                                                <a href="subWarehouseServlet?action=searchSubReturnOut&pageNum=${p}">${p}</a>
+                                                <li><a href="subWarehouseServlet?action=searchSubReturnOut&pageNum=${p}">${p}</a></li>
                                             </c:if>
                                         </c:forEach>
                                         <li><a href="subWarehouseServlet?action=searchSubReturnOut&pageNum=${(pageNum>=pagecount)?pagecount:(pageNum+1)}">»</a></li>

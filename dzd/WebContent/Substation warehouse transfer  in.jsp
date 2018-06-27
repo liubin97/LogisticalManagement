@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/search.js"></script>
-
+    <script type="text/javascript" src="assets/js/submit.js"></script>
 </head>
 
 <body data-type="widgets">
@@ -143,14 +143,14 @@
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                                             <input type="text" class="am-form-field tpl-form-no-bg" name="search" id="search" placeholder="请输入任务单号查询" required>
                                             <span class="am-input-group-btn">
-                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" onclick="doSearchInByTaskId()"></button>
+                                            <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="button" onclick="doSearchInByTaskId()"></button>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </form>
 
-                            <form class="am-form tpl-form-line-form" action="subWarehouseServlet?action=submitTaskIn" method="post" data-am-validator>
+                            <form class="am-form tpl-form-line-form" action="subWarehouseServlet?action=submitTaskIn" onsubmit="return submitConfirm()" method="post" data-am-validator>
                                 <input type="hidden" id="taskid" name="taskid">
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品名称</label>

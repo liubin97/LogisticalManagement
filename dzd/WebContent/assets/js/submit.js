@@ -1,4 +1,30 @@
 
+function submitConfirm() {
+
+        var msg = "您确定要进行此操作吗？";
+        if (confirm(msg)==true){
+            return true;
+        }else{
+            return false;
+        }
+
+    // $('#my-confirm').modal({
+    //     relatedTarget: this,
+    //     onConfirm: function(options) {
+    //
+    //         var msg = '出库成功';
+    //
+    //         document.forms[1].submit();
+    //         alert(msg);
+    //     },
+    //     // closeOnConfirm: false,
+    //     onCancel: function() {
+    //         alert('出库失败');
+    //         return false;
+    //     }
+    // });
+}
+
 function selectCol(){
     var tb = document.getElementById('tbody');
     var rowNum=tb.rows.length;
@@ -34,8 +60,9 @@ function selectCol(){
             onConfirm: function(options) {
 
                 var msg = '出库成功';
-                alert(msg);
+
                 document.forms[1].submit();
+                alert(msg);
             },
             // closeOnConfirm: false,
             onCancel: function() {

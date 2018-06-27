@@ -145,7 +145,7 @@
                                 <div class="am-form-group">
                                     <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" name="search" id="search" class="am-form-field" placeholder="请选择日期查询任务单" data-am-datepicker readonly required >
+                                            <input type="text" name="search" id="search" class="am-form-field" placeholder="请选择要求完成日期查询任务单" data-am-datepicker readonly required >
                                             <span id="warn"></span>
                                             <span class="am-input-group-btn">
                                             <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="submit"></button>
@@ -199,7 +199,7 @@
 	                                            <li class="am-active"><a>${p}</a></li>
 	                                        </c:if>
 	                                        <c:if test="${p!=pageNum}">
-	                                            <a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${p}">${p}</a>
+	                                           <li><a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${p}">${p}</a></li>
 	                                        </c:if>
                                    	 	</c:forEach>
                                         <li><a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${(pageNum>=pagecount)?pagecount:(pageNum+1)}">»</a></li>

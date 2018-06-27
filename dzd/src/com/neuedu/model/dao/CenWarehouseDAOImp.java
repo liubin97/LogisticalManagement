@@ -295,7 +295,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		} finally {
 			DBUtil.closePS(ps);
 		}
-		return pagecount;
+		return (int) Math.ceil(pagecount / (pageSize * 1.0));
 	}
 
 	/* 
@@ -519,7 +519,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		} finally {
 			DBUtil.closePS(ps);
 		}
-		return count;
+		return (int) Math.ceil(count / (pageSize * 1.0));
 	}
 	
 	//根据商品名称查询Id
