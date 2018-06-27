@@ -128,5 +128,30 @@ function doSearchReturnInById() {
         alert("单号不能为空");
     }
 }
+//查询退货出库单
+function doSearchReturnOutById(){
+    if ($("#search").val() != "") {
+        var searchval = $("#search").val();
+        $.ajax({
+            url: "cenWarehouseServlet?action=searchReturnOut",
+            data: "rsid=" + $("#search").val(),
+            datatype: "text",
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            success: function (data) {//这里的data是由请求页面返回的数据
+                var dataJson = JSON.parse(data); // 使用parse方法将data转换成json格式
+                $("#productname").val(dataJson.productname);
+                $("#productnum").val(dataJson.productnum);
+                $("#acnum").val(dataJson.productnum);
+                $("#rsid").val(dataJson.rsid);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("error");
+            }
+        });
+    } else {
+        alert("单号不能为空");
+    }
+}
 
 

@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.naming.spi.DirStateFactory.Result;
 
 import com.neuedu.model.po.CenReturnInInfo;
+import com.neuedu.model.po.CenReturnOutInfo;
 import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.Product;
 import com.neuedu.model.po.PurchaseSupplier;
@@ -144,6 +145,8 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
 		}
 	}
 	
@@ -174,6 +177,13 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 				ps1.setInt(1, num);
 				ps1.executeUpdate();
 				ps2 = conn.prepareStatement(" update wh_res_num set return_num = return_num+?  where res_num_id=1 ");
+				ps2.setInt(1, num);
+				ps2.executeUpdate();
+			}else if(flag==4) {//修改减少总数量、退回数量
+				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num-?  where res_id=1 ");
+				ps1.setInt(1, num);
+				ps1.executeUpdate();
+				ps2 = conn.prepareStatement(" update wh_res_num set return_num = return_num-?  where res_num_id=1 ");
 				ps2.setInt(1, num);
 				ps2.executeUpdate();
 			}
@@ -213,6 +223,8 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
 		}
 		return jsonarr;
 	}
@@ -233,6 +245,8 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
 		}	
 		return pro;
 	}
@@ -254,6 +268,8 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
 		}
 		return name;
 	}
@@ -276,6 +292,8 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
 		}
 		return pagecount;
 	}
@@ -324,6 +342,8 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
 		}
 
 		return json;
@@ -331,6 +351,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 
 	/* 
 	 * 插入退货入库信息
+	 * 修改库存
 	 */
 	public void insertReturnInInfo(CenReturnInInfo crin) {
 		PreparedStatement ps = null;
@@ -345,8 +366,75 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
 		}
 		
+	}
+
+	/* 
+	 * 查询退货 出库信息
+	 */
+	public JSONObject getReturnOutInfo(int rsid) {
+		// TODO Auto-generated method stub
+		PreparedStatement ps = null;
+		JSONObject json = new JSONObject();
+		try {
+			ps = conn.prepareStatement(" select * from purchase_return_supplier_view where rs_id=? and status = 0 ");
+			ps.setInt(1, rsid);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				json.put("rsid", rs.getInt("rs_id"));
+				json.put("productname", getProductById(rs.getInt("prod_id")).getProduct_name());
+				json.put("productnum", rs.getInt("rs_num"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
+		return json;
+	}
+
+	/* 
+	 * 插入退货出库信息
+	 * 修改库存
+	 * 更改退货单状态
+	 */
+	public void insertReturnOutInfo(CenReturnOutInfo croi) {
+		// TODO Auto-generated method stub
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(" insert into cen_return_out_info (rs_id,operate_date,actual_num) values (?,?,?) ");
+			ps.setInt(1, croi.getRs_id());
+			ps.setDate(2, new Date(croi.getOperate_date().getTime()));
+			ps.setInt(3, croi.getActual_num());
+			ps.executeUpdate();
+			editStoragNum(croi.getActual_num(), 4);//修改库存
+			editRerutnStatus(croi.getRs_id(), 1);//修改退货单状态
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
+		
+	}
+	//更改退货单状态
+	public void editRerutnStatus(int rsid,int status) {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(" update return_supplier  set status=? where rs_id=? ");
+			ps.setInt(1, status);
+			ps.setInt(2, rsid);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
 	}
 
 	

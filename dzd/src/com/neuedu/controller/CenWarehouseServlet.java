@@ -1,6 +1,7 @@
 package com.neuedu.controller;
 
 import com.neuedu.model.po.CenReturnInInfo;
+import com.neuedu.model.po.CenReturnOutInfo;
 import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.PurchaseSupplier;
 import com.neuedu.model.service.CenWarehouseService;
@@ -97,6 +98,23 @@ public class CenWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if("searchReturnOut".equals(action)) {
+			try {
+				doGetReturnOutInfo(request, response);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if("sbumitReturnOut".equals(action)) {
+			try {
+				doReturnOut(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			};
 		}
 	}
 	//查询购货单
@@ -188,5 +206,25 @@ public class CenWarehouseServlet extends HttpServlet {
 		crin.setActual_num(Integer.parseInt(actual_num));
 		CenWarehouseService.getInstance().insertReturnInInfo(crin);
 		request.getRequestDispatcher("Central return in.jsp").forward(request, response);
+	}
+	//查询退货出库信息
+	private void doGetReturnOutInfo(HttpServletRequest request, HttpServletResponse response) throws IOException, NumberFormatException, SQLException {
+		String rsid = request.getParameter("rsid");
+		JSONObject json = CenWarehouseService.getInstance().getReturnOutInfo(Integer.parseInt(rsid));
+        response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();	
+		pw.print(json);
+		pw.close();
+	}
+	//插入退货出库信息
+	private void doReturnOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		String rsid = request.getParameter("rsid");
+		String actual_num = request.getParameter("acnum");
+		CenReturnOutInfo croi = new CenReturnOutInfo();
+		croi.setRs_id(Integer.parseInt(rsid));
+		croi.setActual_num(Integer.parseInt(actual_num));
+		croi.setOperate_date(new Date());
+		CenWarehouseService.getInstance().insertReturnOutInfo(croi);
+		request.getRequestDispatcher("Central return out.jsp").forward(request, response);
 	}
 }

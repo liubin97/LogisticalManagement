@@ -8,6 +8,7 @@ package com.neuedu.model.dao;
 import java.sql.Date;
 
 import com.neuedu.model.po.CenReturnInInfo;
+import com.neuedu.model.po.CenReturnOutInfo;
 import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.Product;
 import com.neuedu.model.po.PurchaseSupplier;
@@ -23,11 +24,14 @@ public interface CenWarehouseDAO {
     public JSONArray getTaskListByDate(Date date, int pageNum);
     public int getTaskListPageCount(Date date);
     public JSONObject getReturnInInfo(int task_id);
+    public JSONObject getReturnOutInfo(int rsid);
     public void insertInWarehouseInfo(CenWarehouseInInfo cwin);
     public void editOrderStatus(int order_id, int status);
     public void editTaskListStatus(int tasklist_id,int status);
     public void editStoragNum(int num,int flag);
     public void insertOutWarehouseInfo(int []ids);
     public void insertReturnInInfo(CenReturnInInfo crin);
+    public void insertReturnOutInfo(CenReturnOutInfo croi);
+    public void editRerutnStatus(int rsid,int status);
 }
 

@@ -8,6 +8,7 @@ package com.neuedu.model.service;
 import com.neuedu.model.dao.CenWarehouseDAO;
 import com.neuedu.model.dao.CenWarehouseDAOImp;
 import com.neuedu.model.po.CenReturnInInfo;
+import com.neuedu.model.po.CenReturnOutInfo;
 import com.neuedu.model.po.CenWarehouseInInfo;
 import com.neuedu.model.po.PurchaseSupplier;
 import com.neuedu.utils.DBUtil;
@@ -106,5 +107,29 @@ public class CenWarehouseService {
 			DBUtil.closeConn(conn);
 		}
 	}
-
+	//查询退货出库信息
+	public JSONObject getReturnOutInfo(int rsid) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+		JSONObject json = cwd.getReturnOutInfo(rsid);
+		
+		DBUtil.closeConn(conn);;
+		
+		return json;
+	}
+	//插入退货出库信息
+	public void insertReturnOutInfo(CenReturnOutInfo croi) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		//开启事务
+		DBUtil.beginTransaction(conn);
+		try {
+			CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+			cwd.insertReturnOutInfo(croi);;
+			DBUtil.commit(conn);
+		}catch (Exception e) {
+			DBUtil.rollback(conn);
+		} finally {
+			DBUtil.closeConn(conn);
+		}
+	}
 }

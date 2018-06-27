@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="cn">
 
 <head>
@@ -112,8 +112,6 @@
             </li>
 
             <li class="sidebar-nav-link">
-
-
                 <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-table sidebar-nav-link-logo"></i> 退货管理
                     <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
@@ -153,15 +151,12 @@
                                 <div class="am-u-lg-8 am-u-lg-centered">
                                     <div class="am-form-group tpl-table-list-select">
                                         <select data-am-selected="{btnSize: 'sm'}" style="display: none;">
-                                            <option value="option1">库房名称</option>
-                                            <option value="option2">库房1</option>
-                                            <option value="option3">库房2</option>
-                                            <option value="option3">库房3</option>
+
                                         </select>
                                     </div>
                                     <div class="am-form-group">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field " placeholder="请选择出库日期" data-am-datepicker="" >
+                                            <input type="text" class="am-form-field " placeholder="请选择出库日期" data-am-datepicker="" required>
                                         </div>
                                     </div>
 
@@ -296,7 +291,7 @@
 
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-modal">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd">分发单
+        <div class="am-modal-hd">打印分发单
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
         </div>
         <div class="am-modal-bd">
@@ -304,7 +299,7 @@
                 <!--startprint-->
                 <div class="receipt">
                     <div style="text-align: center">
-                        <h2>出库单</h2>
+                        <h2>分发单</h2>
                         <table align="center" width="60%">
                             <tr>
                                 <th></th>
