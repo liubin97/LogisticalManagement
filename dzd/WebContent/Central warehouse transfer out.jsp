@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="json" uri="http://www.atg.com/taglibs/json" %>
 <!DOCTYPE html>
 <html lang="cn">
 <head>
@@ -98,11 +97,7 @@
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房调拨出库
                         </a>
                     </li>
-                    <li class="sidebar-nav-link">
-                        <a href="Print out receipt.jsp">
-                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房打印出库单
-                        </a>
-                    </li>
+
                     <li class="sidebar-nav-link">
                         <a href="Print%20out%20distribution.jsp" >
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房打印分发单
@@ -112,7 +107,6 @@
             </li>
 
             <li class="sidebar-nav-link">
-
 
                 <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-table sidebar-nav-link-logo"></i> 退货管理
@@ -154,7 +148,7 @@
                                             <input type="text" name="search" id="search" class="am-form-field" placeholder="请选择日期查询任务单" data-am-datepicker readonly required >
                                             <span id="warn"></span>
                                             <span class="am-input-group-btn">
-                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
+                                            <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="submit"></button>
                                             </span>
                                         </div>
                                     </div>

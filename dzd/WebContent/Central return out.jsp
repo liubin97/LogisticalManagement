@@ -98,11 +98,7 @@
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房调拨出库
                         </a>
                     </li>
-                    <li class="sidebar-nav-link">
-                        <a href="Print out receipt.jsp">
-                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房打印出库单
-                        </a>
-                    </li>
+
                     <li class="sidebar-nav-link">
                         <a href="Print%20out%20distribution.jsp" >
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房打印分发单
