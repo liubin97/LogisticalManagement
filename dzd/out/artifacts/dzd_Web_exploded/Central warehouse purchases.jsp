@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html lang="cn">
 <head>
     <meta charset="utf-8">
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/search.js"></script>
+    <script type="text/javascript" src="assets/js/submit.js"></script>
 </head>
 
 <body data-type="widgets">
@@ -47,7 +48,7 @@
                 <ul>
                     <!-- 欢迎语 -->
                     <li class="am-text-sm tpl-header-navbar-welcome">
-                        <a href="javascript:;">欢迎你, <span>Amaze UI</span> </a>
+                        <a href="javascript:;">欢迎使用 </a>
                     </li>
                     <!-- 退出 -->
                     <li class="am-text-sm">
@@ -96,11 +97,7 @@
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房调拨出库
                         </a>
                     </li>
-                    <li class="sidebar-nav-link">
-                        <a href="Print out receipt.jsp">
-                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房打印出库单
-                        </a>
-                    </li>
+
                     <li class="sidebar-nav-link">
                         <a href="Print%20out%20distribution.jsp" >
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房打印分发单
@@ -145,47 +142,47 @@
 
                         <!--查询表单-->
                         <div class="widget-body  am-fr">
-                            <form class="am-form am-form-horizontal">
+                            <form class="am-form am-form-horizontal" data-am-validator>
                                 <div class="am-form-group">
                                     <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field " id="search" placeholder="请输入购货单号查询购货单">
+                                            <input type="text" class="am-form-field " name="search"  id="search" placeholder="请输入购货单号查询购货单" required>
                                             <span id="warn"></span>
                                             <span class="am-input-group-btn">
-                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" onclick="doSearchByPsId()"></button>
+                                            <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="button" onclick="doSearchByPsId()"></button>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </form>
 
-                            <form class="am-form tpl-form-line-form">
-
+                            <form class="am-form tpl-form-line-form" action="cenWarehouseServlet?action=submitPs" method="post" onsubmit="return submitConfirm()" data-am-validator>
+                                <input type="hidden" id="psid" name="psid">
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品名称</label>
                                     <div class="am-u-sm-9">
-                                        <input name="productname" id="productname" type="text" value="电脑" readonly="readonly">
+                                        <input name="productname" id="productname" type="text" required="required"  readonly="readonly">
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">商品数量</label>
                                     <div class="am-u-sm-9">
-                                        <input name="productnum" id="productnum" type="text" value="100" readonly="readonly">
+                                        <input name="productnum" id="productnum" type="text" required="required" readonly="readonly">
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">实际数量</label>
                                     <div class="am-u-sm-9">
-                                        <input name="acnum" id="acnum" type="text" value="100">
+                                        <input name="acnum" id="acnum" type="text" required="required">
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label  class="am-u-sm-3 am-form-label">入库日期</label>
                                     <div class="am-u-sm-9">
-                                        <input name="indate" id="indate" required="required" type="text" class="am-form-field tpl-form-no-bg" placeholder="请选择入库日期" data-am-datepicker="" readonly="">
+                                        <input name="indate" id="indate"  type="text" class="am-form-field tpl-form-no-bg" placeholder="请选择入库日期" data-am-datepicker readonly required >
                                     </div>
                                 </div>
                                 <div class="am-form-group">
@@ -197,11 +194,10 @@
 
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success " data-am-modal="{target: '#my-alert'}">入库</button>
+                                        <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success" id="submitbtn">入库</button>
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -210,14 +206,15 @@
     </div>
 </div>
 
-<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd"></div>
+        <div class="am-modal-hd"><h3>购货入库</h3></div>
         <div class="am-modal-bd">
-            入库成功！
+            <p>是否要入库?</p>
         </div>
         <div class="am-modal-footer">
-            <span class="am-modal-btn">确定</span>
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
         </div>
     </div>
 </div>

@@ -41,7 +41,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		PreparedStatement ps1 = null;
 		int product_id = 0;
 		try {
-			ps1 = conn.prepareStatement(" select * from purchase_supplier where ps_id=? ");
+			ps1 = conn.prepareStatement(" select * from purchase_supplier where ps_id=? and status=0 ");
 			ps1.setInt(1, psid);
 			ResultSet rs = ps1.executeQuery();
 			if(rs.next()) {
@@ -66,7 +66,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		PreparedStatement ps = null;
 		int order_id = 0;
 		try {
-			ps = conn.prepareStatement(" select * from purchase_supplier where ps_id=? ");
+			ps = conn.prepareStatement(" select * from purchase_supplier where ps_id=?  ");
 			ps.setInt(1, psid);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
@@ -84,6 +84,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	/* 
 	 * 插入购货入库单
 	 * 并根据购货单中是否有订单Id修改库存和订单状态
+	 * 修改购货单状态
 	 */
 	public void insertInWarehouseInfo(CenWarehouseInInfo cwin) {
 		// TODO Auto-generated method stub
@@ -95,6 +96,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		}else {
 			editStoragNum(cwin.getActual_num(),1);
 		}
+		editPurchaseStatus(cwin.getPs_id(), 1);
 		try {
 			ps = conn.prepareStatement("insert into cen_warehouse_in_info"
 					+ "(`ps_id`,`actual_number`,`date`,`note`,`operate_date`) values(?,?,?,?,?)");
@@ -103,6 +105,21 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 			ps.setDate(3, new Date(cwin.getDate().getTime()));
 			ps.setString(4, cwin.getNote());
 			ps.setDate(5, new Date(cwin.getOperate_date().getTime()));
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtil.closePS(ps);
+		}
+	}
+	//修改购货单状态
+	public void editPurchaseStatus(int ps_id, int status) {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(" update `purchase_supplier` set `status`=? where ps_id=? ");
+			ps.setInt(1, status);
+			ps.setInt(2, ps_id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -572,5 +589,6 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		}
 		return json;
 	}
+
 	
 }

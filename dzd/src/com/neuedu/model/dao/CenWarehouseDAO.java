@@ -23,6 +23,7 @@ public interface CenWarehouseDAO {
     public Product getProductById(int product_id);
     public JSONArray getTaskListByDate(Date date, int pageNum);
     public int getTaskListPageCount(Date date);
+    public void editPurchaseStatus(int ps_id,int status);
     public JSONObject getReturnInInfo(int task_id);
     public JSONObject getReturnOutInfo(int rsid);
     public int getDistributionPageCount(int sub_id,Date date,String product_name);

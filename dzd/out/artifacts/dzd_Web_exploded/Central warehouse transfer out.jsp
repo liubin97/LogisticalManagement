@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
 <html lang="cn">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
-
+    <script src="assets/js/submit.js"></script>
 </head>
 
 <body data-type="widgets">
@@ -97,11 +97,7 @@
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房调拨出库
                         </a>
                     </li>
-                    <li class="sidebar-nav-link">
-                        <a href="Print out receipt.jsp">
-                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房打印出库单
-                        </a>
-                    </li>
+
                     <li class="sidebar-nav-link">
                         <a href="Print%20out%20distribution.jsp" >
                             <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房打印分发单
@@ -111,7 +107,6 @@
             </li>
 
             <li class="sidebar-nav-link">
-
 
                 <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-table sidebar-nav-link-logo"></i> 退货管理
@@ -146,13 +141,14 @@
 
                         <!--查询表单-->
                         <div class="widget-body  am-fr">
-                            <form class="am-form am-form-horizontal">
+                            <form class="am-form" action="cenWarehouseServlet?action=searchTaskDate" method="post" data-am-validator>
                                 <div class="am-form-group">
                                     <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field tpl-form-no-bg" placeholder="请选择日期查询调拨单" data-am-datepicker="" readonly="">
+                                            <input type="text" name="search" id="search" class="am-form-field" placeholder="请选择要求完成日期查询任务单" data-am-datepicker readonly required >
+                                            <span id="warn"></span>
                                             <span class="am-input-group-btn">
-                                            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                            <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="submit"></button>
                                             </span>
                                         </div>
                                     </div>
@@ -160,110 +156,53 @@
                                 </div>
                             </form>
 
-
+                            <form action="cenWarehouseServlet?action=submitWhOut" method="post">
                             <div class="am-u-sm-12">
-                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
-                                    <thead>
-                                    <tr>
-                                        <th>商品信息</th>
-                                        <th>分站名称</th>
-                                        <th>出库数量</th>
-                                        <th>时间</th>
-                                        <th>选择操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="gradeX">
-                                        <td>超级超级超级大的西瓜</td>
-                                        <td>分站1</td>
-                                        <td>123</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                    <input type="checkbox">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>苹果梨</td>
-                                        <td>分站1</td>
-                                        <td>323</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <input type="checkbox">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>超级超级超级大的西瓜</td>
-                                        <td>分站1</td>
-                                        <td>111</td>
-
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <input type="checkbox">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>超级超级超级大的葡萄</td>
-                                        <td>分站1</td>
-                                        <td>434</td>
-
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <input type="checkbox">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>超级超级超级大的哈密瓜</td>
-                                        <td>分站1</td>
-                                        <td>454354</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <input type="checkbox">
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="even gradeC">
-                                        <td>超级超级超级大的水果蔬菜</td>
-                                        <td>分站1</td>
-                                        <td>34534   </td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <input type="checkbox">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- more data -->
-                                    </tbody>
-                                </table>
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                        <tr>
+                                            <th>选择操作</th>
+                                            <th>商品信息</th>
+                                            <th>分站库房名称</th>
+                                            <th>出库数量</th>
+                                            <th>时间</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${resultList}" var="item">
+                                        <tr>
+                                            <td>
+                                                <input name="chk" type="checkbox"  value="${item.task_list_id}">
+                                            </td>
+                                            <td name="productname">${item.product_name}</td>
+                                            <td name="substation">${item.substation}</td>
+                                            <td name="productnum">${item.product_num}</td>
+                                            <td name="finishdate">${item.finish_date}</td>
+                                        </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
                             </div>
+                                <div class="am-u-sm-12">
+                                    <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success" id="doc-confirm-toggle" onclick="selectCol()">
+                                        调拨出库
+                                    </button>
+                                </div>
+                            </form>
 
                             <div class="am-u-lg-12 am-cf">
-
-                                    <div class="am-u-sm-2">
-                                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success" id="doc-confirm-toggle">
-                                            调拨出库
-                                        </button>
-                                    </div>
-
                                 <div class="am-fr">
                                     <ul class="am-pagination tpl-pagination">
-                                        <li class="am-disabled"><a href="#">«</a></li>
-                                        <li class="am-active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">»</a></li>
+                                        <li><a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${(pageNum<=1)?pageNum:(pageNum-1)}">«</a></li>
+                                        <c:forEach begin="1" end="${pagecount}" var="p">
+	                                        <c:if test="${p==pageNum}">
+	                                            <li class="am-active"><a>${p}</a></li>
+	                                        </c:if>
+	                                        <c:if test="${p!=pageNum}">
+	                                           <li><a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${p}">${p}</a></li>
+	                                        </c:if>
+                                   	 	</c:forEach>
+                                        <li><a href="cenWarehouseServlet?action=searchTaskDate&pageNum=${(pageNum>=pagecount)?pagecount:(pageNum+1)}">»</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -275,10 +214,7 @@
         </div>
     </div>
 </div>
-<button
-        type="button"
-        class="am-btn am-btn-warning"
-        >
+<button type="button" class="am-btn am-btn-warning">
     Confirm
 </button>
 
@@ -295,32 +231,8 @@
                     <th>出库数量</th>
                 </tr>
                 </thead>
-                <tbody align="left">
-                <tr>
-                    <td>库房1</td>
-                    <td>苹果</td>
-                    <td>12</td>
-                </tr>
-                <tr>
-                    <td>库房1</td>
-                    <td>书本</td>
-                    <td>22</td>
-                </tr>
-                <tr>
-                    <td>库房1</td>
-                    <td>足球</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>库房1</td>
-                    <td>手机</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>库房1</td>
-                    <td>电脑</td>
-                    <td>2</td>
-                </tr>
+                <tbody align="left" id="tbody">
+
                 </tbody>
             </table>
 
@@ -332,22 +244,7 @@
     </div>
 </div>
 <script>
-    $(function() {
-        $('#doc-modal-list').find('.am-icon-close').add('#doc-confirm-toggle').
-        on('click', function() {
-            $('#my-confirm').modal({
-                relatedTarget: this,
-                onConfirm: function(options) {
-                    var msg = '出库成功';
-                    alert(msg);
-                },
-                // closeOnConfirm: false,
-                onCancel: function() {
-                    alert('调拨失败');
-                }
-            });
-        });
-    });
+
 </script>
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/amazeui.datatables.min.js"></script>

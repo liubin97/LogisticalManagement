@@ -146,7 +146,7 @@
                                 <div class="am-form-group">
                                     <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field " name="search"  id="search" placeholder="请输入购货单号查询购货单" required>
+                                            <input type="text" class="am-form-field " name="search"  id="search" placeholder="请输入购货单号查询购货单" required  onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/">
                                             <span id="warn"></span>
                                             <span class="am-input-group-btn">
                                             <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="button" onclick="doSearchByPsId()"></button>

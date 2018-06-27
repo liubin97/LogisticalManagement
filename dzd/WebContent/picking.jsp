@@ -137,11 +137,11 @@
 
                         <!--查询表单-->
                         <div class="widget-body  am-fr">
-                            <form class="am-form am-form-horizontal">
+                            <form class="am-form am-form-horizontal" data-am-validator>
                                 <div class="am-form-group">
                                     <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field tpl-form-no-bg" name="search" id="search" placeholder="请输入任务单号查询" required>
+                                            <input type="text" class="am-form-field tpl-form-no-bg" name="search" id="search" placeholder="请输入任务单号查询" required onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/">
                                             <span class="am-input-group-btn">
                                             <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="button" onclick="doSearchOutByTaskId()"></button>
                                             </span>

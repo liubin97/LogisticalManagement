@@ -143,11 +143,11 @@
 
                         <!--查询表单-->
                         <div class="widget-body  am-fr">
-                            <form class="am-form am-form-horizontal">
+                            <form class="am-form am-form-horizontal" data-am-validator>
                                 <div class="am-form-group">
                                     <div class="am-u-sm-6 am-u-lg-centered">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field tpl-form-no-bg"  name="search" id="search"  placeholder="请输入退货单号查询" >
+                                            <input type="text" class="am-form-field tpl-form-no-bg"  name="search" id="search"  placeholder="请输入退货单号查询" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/">
                                             <span class="am-input-group-btn">
                                             <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="button" onclick="doSearchReturnOutById()"></button>
                                             </span>
@@ -182,7 +182,7 @@
                                 </div>
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success " >退货入库</button>
+                                        <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success " >退货出库</button>
                                     </div>
                                 </div>
                             </form>
