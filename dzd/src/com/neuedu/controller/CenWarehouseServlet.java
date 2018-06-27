@@ -98,7 +98,7 @@ public class CenWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("searchReturnOut".equals(action)) {
+		} else if("searchReturnOut".equals(action)) {//查询退货出库信息
 			try {
 				doGetReturnOutInfo(request, response);
 			} catch (NumberFormatException e) {
@@ -108,13 +108,44 @@ public class CenWarehouseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if("sbumitReturnOut".equals(action)) {
+		} else if("sbumitReturnOut".equals(action)) {//提交退货出库信息
 			try {
 				doReturnOut(request, response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			};
+		} else if("getSubstation".equals(action)) {//查询库房信息
+			try {
+				doGetSubstation(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} else if("searchDistribution".equals(action)) {//查询分发单
+			try {
+				doGetDistribution(request, response);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if("searchPrintDis".equals(action)) {
+			try {
+				doGetPrintDis(request, response);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	//查询购货单
@@ -226,5 +257,54 @@ public class CenWarehouseServlet extends HttpServlet {
 		croi.setOperate_date(new Date());
 		CenWarehouseService.getInstance().insertReturnOutInfo(croi);
 		request.getRequestDispatcher("Central return out.jsp").forward(request, response);
+	}
+	//查询分站库房信息
+	private void doGetSubstation(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		JSONArray json = CenWarehouseService.getInstance().getSubstationInfo();
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();	
+		pw.print(json);
+		pw.close();
+		
+	}
+	//查询分发单
+	private void doGetDistribution(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException, ParseException, ServletException, IOException {
+		String sub_id = null;
+		String date = null;
+		String product_name = null;	
+		String pagenum = request.getParameter("pageNum");
+		int pageNum = 1;
+		if(pagenum!=null && !"".equals(pagenum)){
+			//点击页码查询	
+			date = (String) request.getSession().getAttribute("outdate");
+			sub_id = (String) request.getSession().getAttribute("substation");
+			product_name = (String) request.getSession().getAttribute("productname");
+			pageNum = Integer.parseInt(pagenum);
+		}else{
+			//点击页面查询
+			sub_id = request.getParameter("substation");
+			date = request.getParameter("outdate");
+			product_name = request.getParameter("productname");
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		int pageCount = CenWarehouseService.getInstance().getDistributionPageCount(Integer.parseInt(sub_id), new java.sql.Date(sdf.parse(date).getTime()), product_name);
+		JSONArray json = CenWarehouseService.getInstance().getDistribution(Integer.parseInt(sub_id), new java.sql.Date(sdf.parse(date).getTime()), product_name, pageNum);
+		
+		request.setAttribute("resultList", json);
+		request.getSession().setAttribute("outdate", date);
+		request.getSession().setAttribute("substation", sub_id);
+		request.getSession().setAttribute("productname", product_name);
+		request.getSession().setAttribute("pageNum", pageNum);
+		request.getSession().setAttribute("pagecount", pageCount);
+		request.getRequestDispatcher("Print out distribution.jsp").forward(request, response);
+	}
+	//查询要打印的分发单信息
+	private void doGetPrintDis(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException, IOException {
+		String task_id = request.getParameter("taskid");
+		JSONObject json = CenWarehouseService.getInstance().getPrintDis(Integer.parseInt(task_id));
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();	
+		pw.print(json);
+		pw.close();
 	}
 }

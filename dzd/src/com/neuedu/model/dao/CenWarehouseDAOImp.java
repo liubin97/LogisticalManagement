@@ -437,7 +437,140 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		}
 	}
 
+	//查询库房信息
+	public JSONArray getSubstationInfo() {
+		PreparedStatement ps = null;
+		JSONArray jsonarr = new JSONArray();
+		try {
+			ps = conn.prepareStatement(" SELECT * FROM warehouse where wh_level != 0 ");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				JSONObject json = new JSONObject();
+				json.put("substation_id", rs.getInt("wh_id"));
+				json.put("substation_name", rs.getString("wh_name"));
+				jsonarr.add(json);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
+		return jsonarr;
+		
+	}
+	//获取分发单
+	public JSONArray getDistribution(int sub_id,Date date,String product_name,int pageNum) {
+		JSONArray jsonarr = new JSONArray();
+		PreparedStatement ps = null;
+		int product_id = getProductIdByName(product_name);
+		try {
+			ps = conn.prepareStatement(" select * from cen_wh_out_task_view where task_status = 2 and "
+					+ " out_date = ? and substation_id=? and prod_id=? "
+					+ " limit "+(pageSize*(pageNum-1))+" , "+(pageSize*pageNum));
+			ps.setDate(1, new Date(date.getTime()));
+			ps.setInt(2, sub_id);
+			ps.setInt(3, product_id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				JSONObject json = new JSONObject();
+				json.put("product_id", product_id);
+				json.put("product_name", product_name);
+				json.put("product_price", rs.getFloat("price"));
+				json.put("discount",rs.getFloat("discount"));
+				json.put("sum_money", rs.getFloat("sum_money"));
+				json.put("task_id", rs.getInt("task_list_id"));
+				json.put("substation", getWarehouseNameById(sub_id));
+				json.put("substation_id", sub_id);
+				json.put("product_num", rs.getString("amount"));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			    String newdate = sdf.format(rs.getDate("out_date"));
+				json.put("out_date", newdate);
+				jsonarr.add(json);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtil.closePS(ps);
+		}
+		return jsonarr;
+	}
 	
-
+	//获取分发单页数
+	public int getDistributionPageCount(int sub_id,Date date,String product_name) {
+		int count = 0;
+		PreparedStatement ps = null;
+		int product_id = getProductIdByName(product_name);
+		try {
+			ps = conn.prepareStatement(" select count(*) from cen_wh_out_task_view where  task_status = 2 and "
+					+ " out_date=? and substation_id=? and prod_id=? ");
+			ps.setDate(1, new Date(date.getTime()));
+			ps.setInt(2, sub_id);
+			ps.setInt(3, product_id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
+		return count;
+	}
+	
+	//根据商品名称查询Id
+	public int getProductIdByName(String product_name) {
+		PreparedStatement ps = null;
+		int id = 0;
+		try {
+			ps = conn.prepareStatement(" select * from product where product_name = ? ");
+			ps.setString(1, product_name);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				id = rs.getInt("product_id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
+		return id;
+	}
+	
+	//查询要打印的分发单
+	public JSONObject getPrintDis(int task_id) {
+		PreparedStatement ps = null;
+		JSONObject json = new JSONObject();
+		try {
+			ps = conn.prepareStatement(" select * from cen_wh_out_task_view where task_list_id=? ");
+			ps.setInt(1, task_id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				json.put("product_id", rs.getInt("prod_id"));
+				json.put("product_name", getProductById(rs.getInt("prod_id")).getProduct_name());
+				json.put("product_price", rs.getFloat("price"));
+				json.put("discount",rs.getFloat("discount"));
+				json.put("sum_money", rs.getFloat("sum_money"));
+				json.put("task_id", rs.getInt("task_list_id"));
+				json.put("substation", rs.getInt("substation_id"));
+				json.put("substation_id", rs.getInt("substation_id"));
+				json.put("product_num", rs.getString("amount"));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			    String newdate = sdf.format(rs.getDate("out_date"));
+				json.put("out_date", newdate);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closePS(ps);
+		}
+		return json;
+	}
 	
 }

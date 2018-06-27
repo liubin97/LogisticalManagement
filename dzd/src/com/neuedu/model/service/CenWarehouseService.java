@@ -132,4 +132,39 @@ public class CenWarehouseService {
 			DBUtil.closeConn(conn);
 		}
 	}
+	//查询分站库房信息
+	public JSONArray getSubstationInfo() throws SQLException {
+		Connection conn = DBUtil.getConn();
+		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+		JSONArray jsonarr = cwd.getSubstationInfo();
+		DBUtil.closeConn(conn);;
+		return jsonarr;
+	}
+	
+	//查询分发单
+	public JSONArray getDistribution(int sub_id,Date date,String product_name,int pageNum) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+		JSONArray jsonarr = cwd.getDistribution(sub_id, date, product_name, pageNum);
+		DBUtil.closeConn(conn);
+		return jsonarr;
+	}
+	//查询分发单页数
+	public int getDistributionPageCount(int sub_id,Date date,String product_name) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+		int count = cwd.getDistributionPageCount(sub_id, date, product_name);
+		DBUtil.closeConn(conn);
+		return count;
+	}
+	//查询要打印的分发单
+	public JSONObject getPrintDis(int task_id) throws SQLException {
+		Connection conn = DBUtil.getConn();
+		CenWarehouseDAO cwd = new CenWarehouseDAOImp(conn);
+		JSONObject json = cwd.getPrintDis(task_id);
+		
+		DBUtil.closeConn(conn);;
+		
+		return json;
+	}
 }

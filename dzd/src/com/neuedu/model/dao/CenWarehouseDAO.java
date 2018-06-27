@@ -25,6 +25,8 @@ public interface CenWarehouseDAO {
     public int getTaskListPageCount(Date date);
     public JSONObject getReturnInInfo(int task_id);
     public JSONObject getReturnOutInfo(int rsid);
+    public int getDistributionPageCount(int sub_id,Date date,String product_name);
+    public int getProductIdByName(String product_name);
     public void insertInWarehouseInfo(CenWarehouseInInfo cwin);
     public void editOrderStatus(int order_id, int status);
     public void editTaskListStatus(int tasklist_id,int status);
@@ -33,5 +35,8 @@ public interface CenWarehouseDAO {
     public void insertReturnInInfo(CenReturnInInfo crin);
     public void insertReturnOutInfo(CenReturnOutInfo croi);
     public void editRerutnStatus(int rsid,int status);
+    public JSONArray getSubstationInfo();
+    public JSONArray getDistribution(int sub_id,Date date,String product_name,int pageNum) ;
+    public JSONObject getPrintDis(int task_id);
 }
 

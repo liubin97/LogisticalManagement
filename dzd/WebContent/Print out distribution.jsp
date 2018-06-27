@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="cn">
 
@@ -24,6 +25,7 @@
     <script src="assets/js/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/css/print.css"/>
     <script src="assets/js/print.js"></script>
+    <script src="assets/js/printDistribution.js"></script>
 </head>
 
 <body data-type="widgets">
@@ -145,26 +147,26 @@
 
                         <!--查询表单-->
                         <div class="widget-body  am-fr">
-                            <form class="am-form-inline" role="form">
+                            <form class="am-form-inline" action="cenWarehouseServlet?action=searchDistribution" method="post" data-am-validator>
 
 
                                 <div class="am-u-lg-8 am-u-lg-centered">
                                     <div class="am-form-group tpl-table-list-select">
-                                        <select data-am-selected="{btnSize: 'sm'}" style="display: none;">
+                                        <select data-am-selected="{btnSize: 'sm'}" style="display: none;" id="substation" name="substation">
 
                                         </select>
                                     </div>
                                     <div class="am-form-group">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field " placeholder="请选择出库日期" data-am-datepicker="" required>
+                                            <input type="text" class="am-form-field " name="outdate" placeholder="请选择出库日期" data-am-datepicker readonly required>
                                         </div>
                                     </div>
 
                                     <div class="am-form-group">
                                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                            <input type="text" class="am-form-field "  placeholder="请输入商品名查询分发单 ">
+                                            <input type="text" class="am-form-field " name="productname" placeholder="请输入商品名查询" required>
                                             <span class="am-input-group-btn">
-                                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                                <button class="am-btn  am-btn-default am-btn-primary tpl-table-list-field am-icon-search" type="submit"></button>
                                              </span>
                                         </div>
                                     </div>
@@ -175,112 +177,50 @@
                                 <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
                                     <thead>
                                     <tr>
-                                        <th>库房名称</th>
+                                        <th>分站库房名称</th>
                                         <th>商品名称</th>
                                         <th>数量</th>
-                                        <th>日期</th>
+                                        <th>出库日期</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>库房1</td>
-                                        <td>苹果</td>
-                                        <td>100</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="even gradeC">
-                                        <td>库房1</td>
-                                        <td>苹果   </td>
-                                        <td>100</td>
-                                        <td>2016-09-26</td>
-                                        <td>
-                                            <div class="tpl-table-black-operation">
-                                                <a href="#" data-am-modal="{target: '#my-modal'}">
-                                                    <i class="am-icon-print"></i> 打印
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- more data -->
+                                    <c:forEach items="${resultList}" var="item">
+                                        <tr>
+                                            <td name="substation">${item.substation}</td>
+                                            <td name="productname">${item.product_name}</td>
+                                            <td name="productnum">${item.product_num}</td>
+                                            <td name="outdate">${item.out_date}</td>
+                                            <td>
+                                                <div class="tpl-table-black-operation">
+                                                    <a href="#" onclick="printDis(${item.task_id})">
+                                                        <i class="am-icon-print"></i> 打印
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
 
                             <div class="am-u-lg-12 am-cf">
-
                                 <div class="am-fr">
                                     <ul class="am-pagination tpl-pagination">
-                                        <li class="am-disabled"><a href="#">«</a></li>
-                                        <li class="am-active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">»</a></li>
+                                        <li><a href="cenWarehouseServlet?action=searchDistribution&pageNum=${(pageNum<=1)?pageNum:(pageNum-1)}">«</a></li>
+                                        <c:forEach begin="1" end="${pagecount}" var="p">
+                                            <c:if test="${p==pageNum}">
+                                                <li class="am-active"><a>${p}</a></li>
+                                            </c:if>
+                                            <c:if test="${p!=pageNum}">
+                                                <a href="cenWarehouseServlet?action=searchDistribution&pageNum=${p}">${p}</a>
+                                            </c:if>
+                                        </c:forEach>
+                                        <li><a href="cenWarehouseServlet?action=searchDistribution&pageNum=${(pageNum>=pagecount)?pagecount:(pageNum+1)}">»</a></li>
                                     </ul>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -301,56 +241,15 @@
                     <div style="text-align: center">
                         <h2>分发单</h2>
                         <table align="center" width="60%">
+                            <thead>
                             <tr>
                                 <th></th>
                                 <th></th>
                             </tr>
-                            <tr>
-                                <td>分发单号:</td>
-                                <td>1234567890</td>
-                            </tr>
-                            <tr>
-                                <td>商品编号:</td>
-                                <td>1234567890</td>
-                            </tr>
-                            <tr>
-                                <td>商品名称:</td>
-                                <td>电脑</td>
-                            </tr>
-                            <tr>
-                                <td>商品价格:</td>
-                                <td>5000</td>
-                            </tr>
-                            <tr>
-                                <td>商品数量:</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>总金额:</td>
-                                <td>5000</td>
-                            </tr>
-                            <tr>
-                                <td>库房编号:</td>
-                                <td>12341242</td>
-                            </tr>
-                                <td>厂商:</td>
-                                <td>富士康</td>
-                            </tr>
-                            </tr>
-                                <td>分发员:</td>
-                                <td>分发1</td>
-                            </tr>
-                            </tr>
-                                <td>签收人:</td>
-                                <td>刘莫某</td>
-                            </tr>
-
-                            <tr>
-                                <td>日期:</td>
-                                <td>2018-01-01</td>
-                            </tr>
+                            </thead>
+                            <tbody  id="printmodal" >
+                            </tbody>
                         </table>
-
                     </div>
                 </div>
                 <!--endprint-->
