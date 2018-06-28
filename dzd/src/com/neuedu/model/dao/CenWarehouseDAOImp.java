@@ -397,7 +397,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		PreparedStatement ps = null;
 		JSONObject json = new JSONObject();
 		try {
-			ps = conn.prepareStatement(" select * from purchase_return_supplier_view where rs_id=? and status = 0 ");
+			ps = conn.prepareStatement(" select * from return_supplier where rs_id=? and status = 0 ");
 			ps.setInt(1, rsid);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
