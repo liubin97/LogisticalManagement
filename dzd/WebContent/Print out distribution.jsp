@@ -209,7 +209,7 @@
                                                 <li class="am-active"><a>${p}</a></li>
                                             </c:if>
                                             <c:if test="${p!=pageNum}">
-                                                <a href="cenWarehouseServlet?action=searchDistribution&pageNum=${p}">${p}</a>
+                                                <li><a href="cenWarehouseServlet?action=searchDistribution&pageNum=${p}">${p}</a></li>
                                             </c:if>
                                         </c:forEach>
                                         <li><a href="cenWarehouseServlet?action=searchDistribution&pageNum=${(pageNum>=pagecount)?pagecount:(pageNum+1)}">»</a></li>

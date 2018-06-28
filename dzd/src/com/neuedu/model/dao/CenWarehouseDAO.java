@@ -31,7 +31,7 @@ public interface CenWarehouseDAO {
     public void insertInWarehouseInfo(CenWarehouseInInfo cwin);
     public void editOrderStatus(int order_id, int status);
     public void editTaskListStatus(int tasklist_id,int status);
-    public void editStoragNum(int num,int flag);
+    public void editStoragNum(int num,int product_id,int flag);
     public void insertOutWarehouseInfo(int []ids);
     public void insertReturnInInfo(CenReturnInInfo crin);
     public void insertReturnOutInfo(CenReturnOutInfo croi);

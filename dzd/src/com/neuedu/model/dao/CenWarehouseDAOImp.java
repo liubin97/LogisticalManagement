@@ -80,6 +80,25 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		}
 		return order_id;
 	}
+	//通过购货单号获取产品ID
+	public int getProductIdByPsId(int ps_id) {
+		PreparedStatement ps = null;
+		int prod_id = 0;
+		try {
+			ps = conn.prepareStatement(" select * from purchase_supplier where ps_id=?  ");
+			ps.setInt(1, ps_id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				prod_id = rs.getInt("prod_id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtil.closePS(ps);
+		}
+		return prod_id;
+	}
 
 	/* 
 	 * 插入购货入库单
@@ -92,9 +111,9 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		int order_id = getOrderIdByPsId(cwin.getPs_id());
 		if(order_id != 0) {
 			editOrderStatus(order_id, 2);
-			editStoragNum(cwin.getActual_num(), 2);
+			editStoragNum(cwin.getActual_num(),getProductIdByPsId(cwin.getPs_id()), 2);
 		}else {
-			editStoragNum(cwin.getActual_num(),1);
+			editStoragNum(cwin.getActual_num(),getProductIdByPsId(cwin.getPs_id()),1);
 		}
 		editPurchaseStatus(cwin.getPs_id(), 1);
 		try {
@@ -170,38 +189,55 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 	/* 
 	 * 修改库存量
 	 */
-	public void editStoragNum(int num,int flag) {
+	public void editStoragNum(int num,int product_id,int flag) {
 		// TODO Auto-generated method stub
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
 		try {
 			if(flag==1) {//修改增加总量、可分配
-				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num+?  where res_id=1 ");
+				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num+?  where prod_id=? ");
 				ps1.setInt(1, num);
+				ps1.setInt(2, product_id);
 				ps1.executeUpdate();
-				ps2 = conn.prepareStatement(" update wh_res_num set can_distribute = can_distribute+?  where res_num_id=1 ");
+				ps2 = conn.prepareStatement(" update wh_res_num set can_distribute = can_distribute+?  where prod_id=? ");
+				ps2.setInt(1, product_id);
 				ps2.setInt(1, num);
 				ps2.executeUpdate();
 			}else if(flag==2) {//修改增加总量、已分配
-				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num+?  where res_id=1 ");
+				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num+?  where prod_id=? ");
 				ps1.setInt(1, num);
+				ps1.setInt(2, product_id);
 				ps1.executeUpdate();
-				ps2 = conn.prepareStatement(" update wh_res_num set has_distribute = has_distribute+?  where res_num_id=1 ");
+				ps2 = conn.prepareStatement(" update wh_res_num set has_distribute = has_distribute+?  where prod_id=? ");
 				ps2.setInt(1, num);
+				ps2.setInt(2, product_id);
 				ps2.executeUpdate();
 			}else if(flag==3) {//修改增加总量、退回数量
-				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num+?  where res_id=1 ");
+				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num+?  where prod_id=? ");
 				ps1.setInt(1, num);
+				ps1.setInt(2, product_id);
 				ps1.executeUpdate();
-				ps2 = conn.prepareStatement(" update wh_res_num set return_num = return_num+?  where res_num_id=1 ");
+				ps2 = conn.prepareStatement(" update wh_res_num set return_num = return_num+?  where prod_id=? ");
 				ps2.setInt(1, num);
+				ps2.setInt(2, product_id);
 				ps2.executeUpdate();
 			}else if(flag==4) {//修改减少总数量、退回数量
-				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num-?  where res_id=1 ");
+				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num-?  where prod_id=? ");
 				ps1.setInt(1, num);
+				ps1.setInt(2, product_id);
 				ps1.executeUpdate();
-				ps2 = conn.prepareStatement(" update wh_res_num set return_num = return_num-?  where res_num_id=1 ");
+				ps2 = conn.prepareStatement(" update wh_res_num set return_num = return_num-?  where prod_id=? ");
 				ps2.setInt(1, num);
+				ps2.setInt(2, product_id);
+				ps2.executeUpdate();
+			}else if(flag==5) {//修改减少总量、已分配
+				ps1 = conn.prepareStatement(" update wh_reserve_info set res_num = res_num-?  where prod_id=? ");
+				ps1.setInt(1, num);
+				ps1.setInt(2, product_id);
+				ps1.executeUpdate();
+				ps2 = conn.prepareStatement(" update wh_res_num set has_distribute = has_distribute-?  where prod_id=? ");
+				ps2.setInt(1, num);
+				ps2.setInt(2, product_id);
 				ps2.executeUpdate();
 			}
 		} catch (SQLException e) {
@@ -314,6 +350,24 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		}
 		return (int) Math.ceil(pagecount / (pageSize * 1.0));
 	}
+	
+	//获取产品数量通过任务单号
+	public int getProductNumByTaskId(int task_id) {
+		int num = 0;
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(" select * from task_order_view where task_list_id = ? ");
+			ps.setInt(1, task_id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				num = rs.getInt("amount");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return num;
+	}
 
 	/* 
 	 * 插入出库信息
@@ -330,6 +384,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 				ps.executeUpdate();
 				ps.close();
 				editTaskListStatus(ids[i],2);//修改任务单状态到中心库房出库;
+				editStoragNum(getProductNumByTaskId(ids[i]), getProductIdByTaskId(ids[i]), 5);//修改库存
 			}
 			
 		} catch (SQLException e) {
@@ -365,6 +420,25 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 
 		return json;
 	}
+	//根据任务单获取产品ID
+	public int getProductIdByTaskId(int task_id) {
+		PreparedStatement ps = null;
+		int prod_id = 0;
+		try {
+			ps = conn.prepareStatement(" select * from task_order_view where task_list_id=?  ");
+			ps.setInt(1, task_id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				prod_id = rs.getInt("prod_id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtil.closePS(ps);
+		}
+		return prod_id;
+	}
 
 	/* 
 	 * 插入退货入库信息
@@ -379,7 +453,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 			ps.setInt(3, crin.getActual_num());
 			ps.executeUpdate();
 			editTaskListStatus(crin.getTask_list_id(), 11);//修改任务单状态到中心库房入库
-			editStoragNum(crin.getActual_num(), 3);
+			editStoragNum(crin.getActual_num(),getProductIdByTaskId(crin.getTask_list_id()), 3);//修改库存数量
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -413,6 +487,26 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		}
 		return json;
 	}
+	
+	//通过退货单获取产品ID
+	public int getProductIdByRsId(int rs_id){
+		PreparedStatement ps = null;
+		int prod_id = 0;
+		try {
+			ps = conn.prepareStatement(" select * from return_supplier where rs_id=?  ");
+			ps.setInt(1, rs_id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				prod_id = rs.getInt("prod_id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtil.closePS(ps);
+		}
+		return prod_id;
+	}
 
 	/* 
 	 * 插入退货出库信息
@@ -428,7 +522,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 			ps.setDate(2, new Date(croi.getOperate_date().getTime()));
 			ps.setInt(3, croi.getActual_num());
 			ps.executeUpdate();
-			editStoragNum(croi.getActual_num(), 4);//修改库存
+			editStoragNum(croi.getActual_num(),getProductIdByRsId(croi.getRs_id()), 4);//修改库存
 			editRerutnStatus(croi.getRs_id(), 1);//修改退货单状态
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
