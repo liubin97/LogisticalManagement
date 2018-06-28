@@ -239,7 +239,7 @@ public class SubWarehouseDAOImp implements SubWarehouseDAO{
 		try {
 			ps = conn.prepareStatement(" select * from  task_order_retrun_register_view where "
 					+ " task_status = 9 and `return_date` between ? and ? "
-					+ " limit " +(pageSize*(pageNum-1))+" , "+(pageSize*pageNum));
+					+ " limit " +(pageSize*(pageNum-1))+" , "+pageSize);
 			ps.setDate(1, start_date);
 			ps.setDate(2, end_date);
 			ResultSet rs = ps.executeQuery();

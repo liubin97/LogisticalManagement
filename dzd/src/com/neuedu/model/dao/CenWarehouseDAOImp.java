@@ -257,7 +257,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		JSONArray jsonarr = new JSONArray();
 		try {
 			ps = conn.prepareStatement(" select * from task_order_view where finish_date=? and task_status=1 "
-					+ " limit "+(pageSize*(pageNum-1))+" , "+(pageSize*pageNum));
+					+ " limit "+(pageSize*(pageNum-1))+" , "+pageSize);
 			ps.setDate(1, date);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -578,7 +578,7 @@ public class CenWarehouseDAOImp implements CenWarehouseDAO{
 		try {
 			ps = conn.prepareStatement(" select * from cen_wh_out_task_view where task_status = 2 and "
 					+ " out_date = ? and substation_id=? and prod_id=? "
-					+ " limit "+(pageSize*(pageNum-1))+" , "+(pageSize*pageNum));
+					+ " limit "+(pageSize*(pageNum-1))+" , "+pageSize);
 			ps.setDate(1, new Date(date.getTime()));
 			ps.setInt(2, sub_id);
 			ps.setInt(3, product_id);
