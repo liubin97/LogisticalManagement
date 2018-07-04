@@ -1,0 +1,211 @@
+<%@page pageEncoding="UTF-8"%> 
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+	
+	
+	       <header>
+            <!-- logo -->
+            <div class="am-fl tpl-header-logo">
+                <a href="javascript:;"><img src="assets/img/logo.png" alt=""></a>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="tpl-header-fluid">
+                <!-- 侧边切换 -->
+                <div class="am-fl tpl-header-switch-button am-icon-list">
+                    <span>
+
+                </span>
+                </div>
+                
+                <!-- 其它功能-->
+                <div class="am-fr tpl-header-navbar">
+                    <ul>
+                        <!-- 欢迎语 -->
+                        <li class="am-text-sm tpl-header-navbar-welcome">
+                            <a href="javascript:;">欢迎你, <span>Amaze UI</span> </a>
+                        </li>
+
+                        
+
+                
+
+                        <!-- 退出 -->
+                        <li class="am-text-sm">
+                            <a href="javascript:;">
+                                <span class="am-icon-sign-out"></span> 退出
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </header>
+        <!-- 风格切换 -->
+        <div class="tpl-skiner">
+            <div class="tpl-skiner-toggle am-icon-cog">
+            </div>
+            <div class="tpl-skiner-content">
+                <div class="tpl-skiner-content-title">
+                    选择主题
+                </div>
+                <div class="tpl-skiner-content-bar">
+                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
+                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 侧边导航栏 -->
+        <div class="left-sidebar">
+            
+
+            <!-- 菜单 -->
+			<li class="sidebar-nav-heading">Delivery Management</li>
+            <ul class="sidebar-nav">
+			
+                <li class="sidebar-nav-heading">Page<span class="sidebar-nav-heading-info"> 常用页面</span></li>
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 商品管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub" style="display:block">
+                        <li class="sidebar-nav-link">
+                            <a href="addOneTitle.jsp" >
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 一级分类新增
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="addTwoTitle.jsp">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 二级分类新增
+                            </a>
+                        </li>
+						  <li class="sidebar-nav-link">
+                            <a href="manageTitle.jsp">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 分类信息管理
+                            </a>
+                        </li>
+						<li class="sidebar-nav-link">
+                            <a href="addProduct.jsp">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品登记
+                            </a>
+                        </li>
+						<li class="sidebar-nav-link">
+                            <a href="manageProduct.jsp">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品查询与管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+				
+				 <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 库房管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub" style="display:block">
+                        <li class="sidebar-nav-link">
+                            <a href="addWarehouse.jsp" >
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增库房
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="manageWhServlet?action=searchwh&pageno=1">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 库房查询与管理
+                            </a>
+                        </li>
+						<li class="sidebar-nav-link">
+                            <a href="manageReserve.jsp">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 中心库房储备设置
+                            </a>
+                        </li>
+						<li class="sidebar-nav-link">
+                            <a href="searchInfoServlet?action=searchresnum&pageno=1">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 库存量查询
+                            </a>
+                        </li>
+						<li class="sidebar-nav-link">
+                            <a href="searchInOut.jsp">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 出入单查询
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+				
+				
+				<li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 供应商管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub" style="display:block">
+                        <li class="sidebar-nav-link">
+                            <a href="addSupplier.jsp" >
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增供应商
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="searchSupplier.jsp">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 供应商查询与管理
+                            </a>
+                        </li>
+						
+                    </ul>
+                </li>
+				
+				 <li class="sidebar-nav-link">
+                    <a href="purchaseReturnServlet?action=searchstock">
+                        <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 缺货进货
+
+                    </a>
+                </li>	
+                 <li class="sidebar-nav-link">
+                    <a href="purchaseReturnServlet?action=searchwarn">
+                        <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 预警进货
+
+                    </a>
+                </li>
+				 <li class="sidebar-nav-link">
+                    <a href="return.jsp">
+                        <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 退货 
+
+                    </a>
+                </li>
+				<li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 业务统计
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub" style="display:block">
+                        <li class="sidebar-nav-link">
+                            <a href="searchInfoServlet?action=hotproduct" >
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 畅销商品
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="Implementation.jsp">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 分站任务执行情况
+                            </a>
+                        </li>
+						 <li class="sidebar-nav-link">
+                            <a href="searchInfoServlet?action=satisfaction&pageno=1">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 满意度
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+	
+	
+</body>
+</html>

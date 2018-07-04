@@ -1,0 +1,74 @@
+<%@page pageEncoding="UTF-8"%> 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Insert title here</title>
+</head>
+<body>
+	<header> <!-- logo -->
+		<div class="am-fl tpl-header-logo">
+			<a href="javascript:;"><img src="assets/img/logo.png" alt=""></a>
+		</div>
+		<!-- 右侧内容 -->
+		<div class="tpl-header-fluid">
+			<!-- 侧边切换 -->
+			<div class="am-fl tpl-header-switch-button am-icon-list">
+				<span> </span>
+			</div>
+
+			<!-- 其它功能-->
+			<div class="am-fr tpl-header-navbar">
+				<ul>
+					<!-- 欢迎语 -->
+					<li class="am-text-sm tpl-header-navbar-welcome"><a
+						href="javascript:;">欢迎你, <span>Amaze UI</span>
+					</a></li>
+
+					<!-- 退出 -->
+					<li class="am-text-sm"><a href="javascript:;"> <span
+							class="am-icon-sign-out"></span> 退出
+					</a></li>
+				</ul>
+			</div>
+		</div>
+
+		</header>
+		
+		<!-- 风格切换 -->
+		<div class="tpl-skiner">
+			<div class="tpl-skiner-toggle am-icon-cog"></div>
+			<div class="tpl-skiner-content">
+				<div class="tpl-skiner-content-title">选择主题</div>
+				<div class="tpl-skiner-content-bar">
+					<span class="skiner-color skiner-white" data-color="theme-white"></span>
+					<span class="skiner-color skiner-black" data-color="theme-black"></span>
+				</div>
+			</div>
+		</div>
+		<!-- 侧边导航栏 -->
+		<div class="left-sidebar">
+
+
+			<!-- 菜单 -->
+			<li class="sidebar-nav-heading">Substation Management</li>
+			<ul class="sidebar-nav">
+
+				<li class="sidebar-nav-heading">Page<span
+					class="sidebar-nav-heading-info"> 常用页面</span></li>
+				<li class="sidebar-nav-link"><a href="AssigementInquery.jsp">
+						<i class="am-icon-table sidebar-nav-link-logo"></i> 任务单管理
+				</a></li>
+				<li class="sidebar-nav-link"><a href="PaymentInquery.jsp">
+						<i class="am-icon-table sidebar-nav-link-logo"></i> 缴款查询
+				</a></li>
+				<li class="sidebar-nav-link"><a
+					href="InvoiceManagement.jsp"> <i
+						class="am-icon-table sidebar-nav-link-logo"></i> 发票管理
+				</a></li>
+
+			</ul>
+		</div>
+</body>
+</html>
